@@ -1,27 +1,27 @@
 object Form1: TForm1
-  Left = 529
-  Top = 324
-  Width = 528
-  Height = 346
+  Left = 533
+  Top = 251
+  Width = 547
+  Height = 238
   Caption = #1055#1056#1054#1043#1056#1040#1052#1052#1040' '#1040#1042#1058#1054#1055#1040#1056#1050
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Label1: TLabel
-    Left = 448
-    Top = 8
-    Width = 62
-    Height = 13
-    Caption = 'Version_1.07'
+    Left = 431
+    Top = 18
+    Width = 77
+    Height = 16
+    Caption = 'Version_2.01'
   end
   object MainMenu1: TMainMenu
     Left = 16

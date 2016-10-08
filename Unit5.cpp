@@ -257,8 +257,8 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
         Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
         Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
         Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1chas_other")->AsInteger =  StrToInt(Form5->Edit5->Text);
+        Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+        Form5->Query2->FieldByName("Za1chas_other")->AsFloat =  StrToFloat(Form5->Edit5->Text);
         Form5->Query2->Post();
   }
   else
@@ -299,17 +299,17 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
         Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
         Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
         Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1km")->AsInteger =  StrToInt(Form5->Edit5->Text);
+        Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+        Form5->Query2->FieldByName("Za1km")->AsFloat =  StrToFloat(Form5->Edit5->Text);
         if (CheckBox2->Checked==true)
         {
-          Form5->Query2->FieldByName("Za1km_5")->AsInteger =  StrToInt(Form5->Edit6->Text);
-          Form5->Query2->FieldByName("Za1km_10")->AsInteger =  StrToInt(Form5->Edit7->Text);
+          Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
+          Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
 
         }
 
         if (CheckBox1->Checked==true)
-         Form5->Query2->FieldByName("Za1MChas")->AsInteger =  StrToInt(Form5->Edit2->Text);
+         Form5->Query2->FieldByName("Za1MChas")->AsFloat =  StrToFloat(Form5->Edit2->Text);
       AnsiString pric="";
       for (int i =0;i< Form5->CheckListBox1->Items->Count; i++ )
       { if (CheckListBox1->Checked[i]==true)
@@ -362,16 +362,16 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
         Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
         Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
         Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1km")->AsInteger =  StrToInt(Form5->Edit5->Text);
+        Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+        Form5->Query2->FieldByName("Za1km")->AsFloat =  StrToFloat(Form5->Edit5->Text);
          if (CheckBox2->Checked==true)
         {
-          Form5->Query2->FieldByName("Za1km_5")->AsInteger =  StrToInt(Form5->Edit6->Text);
-          Form5->Query2->FieldByName("Za1km_10")->AsInteger =  StrToInt(Form5->Edit7->Text);
+          Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
+          Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
 
         }
          if (CheckBox1->Checked==true)
-         Form5->Query2->FieldByName("Za1MChas")->AsInteger =  StrToInt(Form5->Edit2->Text);
+         Form5->Query2->FieldByName("Za1MChas")->AsFloat =  StrToFloat(Form5->Edit2->Text);
         Form5->Query2->Post();
 
 

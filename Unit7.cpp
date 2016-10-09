@@ -243,13 +243,13 @@ void __fastcall TForm7::Edit3KeyPress(TObject *Sender, char &Key)
                   Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
                       Query2->Open();
                       if ( Form7->ComboBox7->Text == "Жилье")
-                {Edit5->Text = IntToStr(int(Query2->FieldByName("Za1Chas")->AsInteger * StrToFloat(Form7->Edit3->Text)));
+                {Edit5->Text = FloatToStrF(Query2->FieldByName("Za1Chas")->AsFloat * StrToFloat(Form7->Edit3->Text),ffFixed,10,2);
 
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
+                Edit7->Text= FloatToStr( Query2->FieldByName("Za1Chas")->AsFloat );
                  }
                        if ( Form7->ComboBox7->Text == "Прочие")
-                { Edit5->Text = IntToStr(int(Query2->FieldByName("Za1Chas_other")->AsInteger * StrToFloat(Form7->Edit3->Text)));
-                  Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas_other")->AsInteger );
+                { Edit5->Text = FloatToStrF(Query2->FieldByName("Za1Chas_other")->AsFloat * StrToFloat(Form7->Edit3->Text),ffFixed,10,2);
+                  Edit7->Text= FloatToStr( Query2->FieldByName("Za1Chas_other")->AsFloat );
                  }
                         Query2->Close();
 
@@ -271,7 +271,7 @@ void __fastcall TForm7::Edit3KeyPress(TObject *Sender, char &Key)
 void __fastcall TForm7::Edit2KeyPress(TObject *Sender, char &Key)
 {
 
-          int chas;
+          float chas,km;// Для рассчета итоговой стоимости (edit4, edit5)
 
 
           if(Key == VK_RETURN )
@@ -280,69 +280,68 @@ void __fastcall TForm7::Edit2KeyPress(TObject *Sender, char &Key)
 
           if (Form7->ComboBox4->Text=="Седельные тягачи")
           { // формируем форму заполнения для тягачей поля //
-
-
-             //ShowMessage("Расчет цены для тягачей") ;
+            //ShowMessage("Расчет цены для тягачей") ;
 
                 Query2->Close();
-                 Query2->SQL->Clear();
+                Query2->SQL->Clear();
 
                 // ShowMessage(Form7 ->ComboBox3->Text);
-            Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
-
-                 Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
-                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
-                      Query2->Open();
-                if (ComboBox8->Text == "0%")
-                        chas= int(Query2->FieldByName("Za1Km")->AsInteger * StrToFloat(Form7->Edit2->Text));
-                if (ComboBox8->Text == "5%")
-                        chas= int(Query2->FieldByName("Za1Km_5")->AsInteger * StrToFloat(Form7->Edit2->Text));
-                if (ComboBox8->Text == "10%")
-                        chas= int(Query2->FieldByName("Za1Km_10")->AsInteger * StrToFloat(Form7->Edit2->Text));
-
-                 int km= int(Query2->FieldByName("Za1Chas")->AsInteger * StrToFloat(Form7->Edit3->Text));
+                Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+                Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
+                Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+                Query2->Open();
 
                 if (ComboBox8->Text == "0%")
-                        Edit6->Text=IntToStr(Query2->FieldByName("Za1Km")->AsInteger );
+                        chas= Query2->FieldByName("Za1Km")->AsFloat * StrToFloat(Form7->Edit2->Text);
                 if (ComboBox8->Text == "5%")
-                        Edit6->Text=IntToStr(Query2->FieldByName("Za1Km_5")->AsInteger );
+                        chas= Query2->FieldByName("Za1Km_5")->AsFloat * StrToFloat(Form7->Edit2->Text);
                 if (ComboBox8->Text == "10%")
-                        Edit6->Text=IntToStr(Query2->FieldByName("Za1Km_10")->AsInteger );
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
+                        chas= Query2->FieldByName("Za1Km_10")->AsFloat * StrToFloat(Form7->Edit2->Text);
+
+                km= Query2->FieldByName("Za1Chas")->AsFloat * StrToFloat(Form7->Edit3->Text);
+
+                if (ComboBox8->Text == "0%")
+                        Edit6->Text=FloatToStrF(Query2->FieldByName("Za1Km")->AsFloat,ffFixed,10,2);
+                if (ComboBox8->Text == "5%")
+                        Edit6->Text=FloatToStrF(Query2->FieldByName("Za1Km_5")->AsFloat,ffFixed,10,2 );
+                if (ComboBox8->Text == "10%")
+                        Edit6->Text=FloatToStrF(Query2->FieldByName("Za1Km_10")->AsFloat,ffFixed,10,2);
+                Edit7->Text= FloatToStrF( Query2->FieldByName("Za1Chas")->AsFloat,ffFixed,10,2 );
 
 
-                       Query2->Close();
+                Query2->Close();
 
                if(ComboBox7->Text !="Нет")
-           { Query2->SQL->Clear();
-
-                // ShowMessage(Form7 ->ComboBox3->Text);
-            Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1chas from Cars where Marka =:p1");
-
+               {
+                 Query2->SQL->Clear();
+                 Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1chas from Cars where Marka =:p1");
                  Query2->ParamByName("p1")->AsString=Form7 ->ComboBox7->Text;
+                 Query2->Open();
 
-                      Query2->Open();
-                      if (ComboBox8->Text == "0%")
-                       chas= chas+int(Query2->FieldByName("Za1Km")->AsInteger * StrToFloat(Form7->Edit2->Text));
-                      if (ComboBox8->Text == "5%")
-                       chas= chas+int(Query2->FieldByName("Za1Km_5")->AsInteger * StrToFloat(Form7->Edit2->Text));
-                      if (ComboBox8->Text == "10%")
-                       chas= chas+int(Query2->FieldByName("Za1Km_10")->AsInteger * StrToFloat(Form7->Edit2->Text));
 
-                       km=  km+ int( Query2->FieldByName("Za1Chas")->AsInteger * StrToFloat(Form7->Edit3->Text));
-                       if (ComboBox8->Text == "0%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km")->AsInteger );
-                       if (ComboBox8->Text == "5%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km_5")->AsInteger );
-                       if (ComboBox8->Text == "10%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km_10")->AsInteger );
-                         Edit7->Text= IntToStr(StrToInt(Edit7->Text)+ Query2->FieldByName("Za1Chas")->AsInteger );
+                 if (ComboBox8->Text == "0%")
+                       chas= chas+Query2->FieldByName("Za1Km")->AsFloat * StrToFloat(Form7->Edit2->Text);
+                 if (ComboBox8->Text == "5%")
+                       chas= chas+Query2->FieldByName("Za1Km_5")->AsFloat * StrToFloat(Form7->Edit2->Text);
+                 if (ComboBox8->Text == "10%")
+                       chas= chas+Query2->FieldByName("Za1Km_10")->AsFloat * StrToFloat(Form7->Edit2->Text);
+
+                 km=  km +  Query2->FieldByName("Za1Chas")->AsFloat * StrToFloat(Form7->Edit3->Text);
+
+                 if (ComboBox8->Text == "0%")
+                         Edit6->Text=FloatToStr(StrToFloat(Edit6->Text)+ Query2->FieldByName("Za1Km")->AsFloat );
+                 if (ComboBox8->Text == "5%")
+                         Edit6->Text=FloatToStr(StrToFloat(Edit6->Text)+ Query2->FieldByName("Za1Km_5")->AsFloat );
+                 if (ComboBox8->Text == "10%")
+                         Edit6->Text=FloatToStr(StrToFloat(Edit6->Text)+ Query2->FieldByName("Za1Km_10")->AsFloat );
+
+                         Edit7->Text= FloatToStr(StrToFloat(Edit7->Text)+ Query2->FieldByName("Za1Chas")->AsFloat );
 
 
              }
-              Edit4->Text=IntToStr( chas );
-                Edit5->Text= IntToStr(  km );
-               Form7->Button1->SetFocus();
+              Edit4->Text=FloatToStrF( chas,ffFixed,10,2 );
+              Edit5->Text= FloatToStrF(  km,ffFixed,10,2 );
+              Form7->Button1->SetFocus();
 
 
           }
@@ -351,96 +350,45 @@ void __fastcall TForm7::Edit2KeyPress(TObject *Sender, char &Key)
             //    ShowMessage("Расчет цены");
 
                 Query2->Close();
-                 Query2->SQL->Clear();
+                Query2->SQL->Clear();
 
                 // ShowMessage(Form7 ->ComboBox3->Text);
-            Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1MChas, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+                Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1MChas, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
 
                  Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
-                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+                 Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
                       Query2->Open();
                 if(CheckBox4->Checked==true)
-                {Edit4->Text= int(Query2->FieldByName("Za1MChas")->AsInteger * StrToFloat(Form7->Edit2->Text));
-                  Edit6->Text=IntToStr(Query2->FieldByName("Za1MChas")->AsInteger );
+                {
+                  Edit4->Text= FloatToStrF(Query2->FieldByName("Za1MChas")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
+                  Edit6->Text=FloatToStr(Query2->FieldByName("Za1MChas")->AsFloat );
                  }
                  else
               {
-                 /*
-                  if (ComboBox8->Text == "0%")
-                       chas= chas+Query2->FieldByName("Za1Km")->AsInteger * StrToInt(Form7->Edit2->Text);
-                      if (ComboBox8->Text == "5%")
-                       chas= chas+Query2->FieldByName("Za1Km_5")->AsInteger * StrToInt(Form7->Edit2->Text);
-                      if (ComboBox8->Text == "10%")
-                       chas= chas+Query2->FieldByName("Za1Km_10")->AsInteger * StrToInt(Form7->Edit2->Text);
 
-                       km=  km+  Query2->FieldByName("Za1Chas")->AsInteger * StrToInt(Form7->Edit3->Text);
-                       if (ComboBox8->Text == "0%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km")->AsInteger );
-                       if (ComboBox8->Text == "5%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km_5")->AsInteger );
-                       if (ComboBox8->Text == "10%")
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km_10")->AsInteger );
-                         Edit7->Text= IntToStr(StrToInt(Edit7->Text)+ Query2->FieldByName("Za1Chas")->AsInteger );*/
                 if (ComboBox8->Text == "0%")
-                Edit4->Text= int(Query2->FieldByName("Za1Km")->AsInteger * StrToFloat(Form7->Edit2->Text));
+                Edit4->Text= FloatToStrF(Query2->FieldByName("Za1Km")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
                 if (ComboBox8->Text == "5%")
-                Edit4->Text= int(Query2->FieldByName("Za1Km_5")->AsInteger * StrToFloat(Form7->Edit2->Text));
+                Edit4->Text= FloatToStrF(Query2->FieldByName("Za1Km_5")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
                 if (ComboBox8->Text == "10%")
-                Edit4->Text= int(Query2->FieldByName("Za1Km_10")->AsInteger * StrToFloat(Form7->Edit2->Text));
+                Edit4->Text= FloatToStrF(Query2->FieldByName("Za1Km_10")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
 
-                Edit5->Text= int(Query2->FieldByName("Za1Chas")->AsInteger * StrToFloat(Form7->Edit3->Text));
+                Edit5->Text= FloatToStrF(Query2->FieldByName("Za1Chas")->AsFloat * StrToFloat(Form7->Edit3->Text),ffFixed,10,2);
 
 
                  if (ComboBox8->Text == "0%")
-                Edit6->Text=IntToStr(Query2->FieldByName("Za1Km")->AsInteger );
+                Edit6->Text=FloatToStr(Query2->FieldByName("Za1Km")->AsFloat );
                   if (ComboBox8->Text == "5%")
-                 Edit6->Text=IntToStr(Query2->FieldByName("Za1Km_5")->AsInteger );
+                 Edit6->Text=FloatToStr(Query2->FieldByName("Za1Km_5")->AsFloat );
                   if (ComboBox8->Text == "10%")
-                  Edit6->Text=IntToStr(Query2->FieldByName("Za1Km_10")->AsInteger );
+                  Edit6->Text=FloatToStr(Query2->FieldByName("Za1Km_10")->AsFloat );
 
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
+                Edit7->Text= FloatToStr( Query2->FieldByName("Za1Chas")->AsFloat );
                }
                 Form7->Button1->SetFocus();
 
                 //Form7->Visible=false;
             }
-
-
-
-
-       /*   if (Form7->ComboBox3->Text=="Механизмы")
-         {
-          //ShowMessage("механизмы");
-          // формируем форму заполнения для механизмов //
-
-
-
-             //ShowMessage("Расчет цены для механизмов") ;
-
-             Query2->Close();
-             Query2->SQL->Clear();
-             Query2->SQL->Add("select Za1Chas_other , Za1Chas from Cars where   Marka=:p2");
-
-
-                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
-                      Query2->Open();
-                      if ( Form7->ComboBox7->Text == "Жилье")
-                {Edit5->Text = IntToStr(Query2->FieldByName("Za1Chas")->AsInteger * StrToInt(Form7->Edit3->Text));
-
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
-                 }
-                       if ( Form7->ComboBox7->Text == "Прочие")
-                { Edit5->Text = IntToStr(Query2->FieldByName("Za1Chas_other")->AsInteger * StrToInt(Form7->Edit3->Text));
-                  Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas_other")->AsInteger );
-                 }
-                  // Edit6->Text= IntToStr( 0 );
-                       Query2->Close();
-
-                        Form7->Button1->SetFocus();
-
-           }       */
-
-
 
      }
 
@@ -523,85 +471,6 @@ void __fastcall TForm7::ComboBox7KeyPress(TObject *Sender, char &Key)
              Form7->ComboBox8->SetFocus();
 
 
-         /*  if( ComboBox4->Text == "Седельные тягачи" )
-          Edit3->SetFocus();
-
-            if( ComboBox3->Text == "Механизмы" )
-              Edit3->SetFocus();    */
-
-       /*  if( ComboBox4->Text == "Седельные тягачи" )
-         { //ShowMessage("Расчет цены для тягачей") ;
-
-                Query2->Close();
-                 Query2->SQL->Clear();
-
-                // ShowMessage(Form7 ->ComboBox3->Text);
-            Query2->SQL->Add("select Za1km , Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
-
-                 Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
-                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
-                      Query2->Open();
-                int chas= Query2->FieldByName("Za1Km")->AsInteger * StrToInt(Form7->Edit2->Text);
-                 int km= Query2->FieldByName("Za1Chas")->AsInteger * StrToInt(Form7->Edit3->Text);
-
-                 Edit6->Text=IntToStr(Query2->FieldByName("Za1Km")->AsInteger );
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
-
-
-                       Query2->Close();
-
-               if(ComboBox7->Text !="Нет")
-           { Query2->SQL->Clear();
-
-                // ShowMessage(Form7 ->ComboBox3->Text);
-            Query2->SQL->Add("select Za1km , Za1chas from Cars where Marka =:p1");
-
-                 Query2->ParamByName("p1")->AsString=Form7 ->ComboBox7->Text;
-
-                      Query2->Open();
-                       chas= chas+Query2->FieldByName("Za1Km")->AsInteger * StrToInt(Form7->Edit2->Text);
-                       km=  km+  Query2->FieldByName("Za1Chas")->AsInteger * StrToInt(Form7->Edit3->Text);
-                         Edit6->Text=IntToStr(StrToInt(Edit6->Text)+ Query2->FieldByName("Za1Km")->AsInteger );
-                        Edit7->Text= IntToStr(StrToInt(Edit7->Text)+ Query2->FieldByName("Za1Chas")->AsInteger );
-
-
-             }
-              Edit4->Text=IntToStr( chas );
-                Edit5->Text= IntToStr(  km );
-
-
-            }
-
-           if( ComboBox3->Text == "Механизмы" )
-           { //ShowMessage("Расчет цены для механизмов") ;
-
-             Query2->Close();
-             Query2->SQL->Clear();
-             Query2->SQL->Add("select Za1Chas_other , Za1Chas from Cars where   Marka=:p2");
-
-
-                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
-                      Query2->Open();
-                      if ( Form7->ComboBox7->Text == "Жилье")
-                {Edit5->Text = IntToStr(Query2->FieldByName("Za1Chas")->AsInteger * StrToInt(Form7->Edit3->Text));
-
-                Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas")->AsInteger );
-                 }
-                       if ( Form7->ComboBox7->Text == "Прочие")
-                { Edit5->Text = IntToStr(Query2->FieldByName("Za1Chas_other")->AsInteger * StrToInt(Form7->Edit3->Text));
-                  Edit7->Text= IntToStr( Query2->FieldByName("Za1Chas_other")->AsInteger );
-                 }
-                   Edit6->Text= IntToStr( 0 );
-                       Query2->Close();
-
-           }
-
-           Form7->Button1->SetFocus();
-       // Form7->Button1->Click();
-       //    Form7->Label10 ->Visible=false;
-           // Form7->Label10 ->Caption= "Прицеп" ;
-          //  Form7->ComboBox7->Visible= false;
-  */
 }
 //---------------------------------------------------------------------------
 
@@ -699,9 +568,9 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
         {
         Form7->Query3->FieldByName("Km")->AsFloat = StrToFloat(Form7->Edit2->Text);
       //  Form7->Query3->FieldByName("Ch")->AsInteger =  StrToInt(Form7->Edit3->Text);
-        Form7->Query3->FieldByName("Cost1")->AsInteger = StrToInt(Form7->Edit4->Text);
+        Form7->Query3->FieldByName("Cost1")->AsFloat = StrToFloat(Form7->Edit4->Text);
       //  Form7->Query3->FieldByName("Cost2")->AsInteger =  StrToInt(Form7->Edit5->Text);
-        Form7->Query3->FieldByName("Za1_km")->AsInteger = StrToInt(Form7->Edit6->Text);
+        Form7->Query3->FieldByName("Za1_km")->AsFloat = StrToFloat(Form7->Edit6->Text);
         //Form7->Query3->FieldByName("Za1_ch")->AsInteger =  StrToInt(Form7->Edit7->Text);
 
 
@@ -717,23 +586,20 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          else
 
          {
-            Form7->Query3->FieldByName("Km")->AsFloat = StrToFloat(Form7->Edit2->Text);
-        Form7->Query3->FieldByName("Ch")->AsFloat =  StrToFloat(Form7->Edit3->Text);
-        Form7->Query3->FieldByName("Cost1")->AsInteger = StrToInt(Form7->Edit4->Text);
-        Form7->Query3->FieldByName("Cost2")->AsInteger =  StrToInt(Form7->Edit5->Text);
-        Form7->Query3->FieldByName("Za1_km")->AsInteger = StrToInt(Form7->Edit6->Text);
-        Form7->Query3->FieldByName("Za1_ch")->AsInteger =  StrToInt(Form7->Edit7->Text);
-
-
-
+          Form7->Query3->FieldByName("Km")->AsFloat = StrToFloat(Form7->Edit2->Text);
+          Form7->Query3->FieldByName("Ch")->AsFloat =  StrToFloat(Form7->Edit3->Text);
+          Form7->Query3->FieldByName("Cost1")->AsFloat = StrToFloat(Form7->Edit4->Text);
+          Form7->Query3->FieldByName("Cost2")->AsFloat =  StrToFloat(Form7->Edit5->Text);
+          Form7->Query3->FieldByName("Za1_km")->AsFloat = StrToFloat(Form7->Edit6->Text);
+          Form7->Query3->FieldByName("Za1_ch")->AsFloat =  StrToFloat(Form7->Edit7->Text);
          }
 
           if (Form7->CheckBox1->Checked==true)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
-           Form7->Query3->FieldByName("Za1_chv")->AsInteger =  StrToInt(Form7->Edit9->Text);
+           Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
 
-        Form7->Query3->Post();
+         Form7->Query3->Post();
 
 
 
@@ -819,11 +685,11 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
 
         Form7->Query3->FieldByName("Km")->AsFloat = StrToFloat(Form7->Edit2->Text);
         //Form7->Query3->FieldByName("Ch")->AsInteger =  StrToInt(Form7->Edit3->Text);
-        Form7->Query3->FieldByName("Cost1")->AsInteger = StrToInt(Form7->Edit4->Text);
+        Form7->Query3->FieldByName("Cost1")->AsFloat = StrToFloat(Form7->Edit4->Text);
         //Form7->Query3->FieldByName("Cost2")->AsInteger =  StrToInt(Form7->Edit5->Text);
 
 
-        Form7->Query3->FieldByName("Za1_km")->AsInteger = StrToInt(Form7->Edit6->Text);
+        Form7->Query3->FieldByName("Za1_km")->AsFloat = StrToFloat(Form7->Edit6->Text);
        // Form7->Query3->FieldByName("Za1_ch")->AsInteger =  StrToInt(Form7->Edit7->Text);
 
            if(CheckBox2->Checked==true)
@@ -839,16 +705,16 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          {
                 Form7->Query3->FieldByName("Km")->AsFloat = StrToFloat(Form7->Edit2->Text);
                 Form7->Query3->FieldByName("Ch")->AsFloat =  StrToFloat(Form7->Edit3->Text);
-                Form7->Query3->FieldByName("Cost1")->AsInteger = StrToInt(Form7->Edit4->Text);
-                Form7->Query3->FieldByName("Cost2")->AsInteger =  StrToInt(Form7->Edit5->Text);
-                Form7->Query3->FieldByName("Za1_km")->AsInteger = StrToInt(Form7->Edit6->Text);
-                Form7->Query3->FieldByName("Za1_ch")->AsInteger =  StrToInt(Form7->Edit7->Text);
+                Form7->Query3->FieldByName("Cost1")->AsFloat = StrToFloat(Form7->Edit4->Text);
+                Form7->Query3->FieldByName("Cost2")->AsFloat =  StrToFloat(Form7->Edit5->Text);
+                Form7->Query3->FieldByName("Za1_km")->AsFloat = StrToFloat(Form7->Edit6->Text);
+                Form7->Query3->FieldByName("Za1_ch")->AsFloat =  StrToFloat(Form7->Edit7->Text);
 
 
          }
           if (Form7->CheckBox1->Checked==true)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
-           Form7->Query3->FieldByName("Za1_chv")->AsInteger =  StrToInt(Form7->Edit9->Text);
+           Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
         Form7->Query3->Post();
 
@@ -942,12 +808,12 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          Form7->Query3->FieldByName("Zh")->AsBoolean= true;
         if (ComboBox7->Text=="Прочие")
           Form7->Query3->FieldByName("Zh")->AsBoolean= false;
-          Form7->Query3->FieldByName("Cost2")->AsInteger = StrToInt(Form7->Edit5->Text);
+          Form7->Query3->FieldByName("Cost2")->AsFloat = StrToFloat(Form7->Edit5->Text);
          // Form7->Query3->FieldByName("Za1_km")->AsInteger = StrToInt(Form7->Edit6->Text);
-        Form7->Query3->FieldByName("Za1_ch")->AsInteger =  StrToInt(Form7->Edit7->Text);
+        Form7->Query3->FieldByName("Za1_ch")->AsFloat =  StrToFloat(Form7->Edit7->Text);
           if (Form7->CheckBox1->Checked==true)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
-           Form7->Query3->FieldByName("Za1_chv")->AsInteger =  StrToInt(Form7->Edit9->Text);
+           Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
         Form7->Query3->Post();
 
@@ -994,7 +860,7 @@ void __fastcall TForm7::CheckBox1Click(TObject *Sender)
 
 void __fastcall TForm7::Button2Click(TObject *Sender)
 {
-          if(Edit1->Text == "" || ComboBox1->Text == "" || ComboBox2->Text == "" ||ComboBox4->Text == "" || ComboBox5->Text == ""  )
+   /*       if(Edit1->Text == "" || ComboBox1->Text == "" || ComboBox2->Text == "" ||ComboBox4->Text == "" || ComboBox5->Text == ""  )
           {
             ShowMessage("Вы не заполнили все поля ");
             return;
@@ -1087,7 +953,7 @@ void __fastcall TForm7::Button2Click(TObject *Sender)
 
            }
 
-           Form7->Button1->SetFocus();
+           Form7->Button1->SetFocus();   */
 }
 //---------------------------------------------------------------------------
 
@@ -1207,13 +1073,13 @@ void __fastcall TForm7::Edit6KeyPress(TObject *Sender, char &Key)
 
           if (CheckBox2->Checked==true || CheckBox3->Checked==true || CheckBox4->Checked==true )
           {
-            Form7-> Edit4->Text=IntToStr(int(StrToFloat(Edit2->Text)*StrToInt(Edit6->Text))) ;
+            Form7-> Edit4->Text=FloatToStrF(StrToFloat(Edit2->Text)*StrToFloat(Edit6->Text),ffFixed,10,2) ;
            Button1->SetFocus();
 
            }
            else
            {
-             Form7-> Edit4->Text=IntToStr(int(StrToFloat(Edit2->Text)*StrToInt(Edit6->Text))) ;
+             Form7-> Edit4->Text=FloatToStrF(StrToFloat(Edit2->Text)*StrToFloat(Edit6->Text),ffFixed,10,2) ;
              Button1->SetFocus();
 
            }
@@ -1228,7 +1094,7 @@ void __fastcall TForm7::Edit7KeyPress(TObject *Sender, char &Key)
 {   if(Key == VK_RETURN )
 
     {
-    Form7-> Edit5->Text=IntToStr(int(StrToFloat(Edit3->Text)*StrToInt(Edit7->Text))) ;
+    Form7-> Edit5->Text=FloatToStrF(StrToFloat(Edit3->Text)*StrToFloat(Edit7->Text),ffFixed,10,2) ;
              Button1->SetFocus();
              }
 }
@@ -1257,8 +1123,8 @@ void __fastcall TForm7::Edit9KeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
        if(Key == VK_RETURN )
-      { 
-       Edit10->Text=IntToStr(int(StrToFloat(Edit8->Text)*StrToInt(Edit9->Text)))  ;
+      {
+       Edit10->Text=FloatToStrF(StrToFloat(Edit8->Text)*StrToFloat(Edit9->Text),ffFixed,10,2);
         Button1->SetFocus();
        }
 }
@@ -1293,5 +1159,6 @@ void __fastcall TForm7::ComboBox8KeyPress(TObject *Sender, char &Key)
     }
 }
 //---------------------------------------------------------------------------
+
 
 

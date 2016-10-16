@@ -98,7 +98,7 @@ if (Form8->MonthCalendar1->Date > Form8->MonthCalendar2->Date)
 
 
  Query1->Close();
-Memo1->Lines->Add("Otchet s " + DateToStr(Form8->MonthCalendar1->Date ) + " po " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
+Memo1->Lines->Add("Îò÷åò ñ " + DateToStr(Form8->MonthCalendar1->Date ) + " ïî " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
 Query1->ParamByName("p1")->AsDate =Form8->MonthCalendar1->Date;
 Query1->ParamByName("p2")->AsDate =Form8->MonthCalendar2->Date;
 Query1->Open();
@@ -815,7 +815,7 @@ if (Form8->MonthCalendar1->Date > Form8->MonthCalendar2->Date)
 
 
  Query2->Close();
-Memo1->Lines->Add("Otchet s " + DateToStr(Form8->MonthCalendar1->Date ) + " po " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
+Memo1->Lines->Add("Îò÷åò ñ " + DateToStr(Form8->MonthCalendar1->Date ) + " ïî " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
 Query2->ParamByName("p1")->AsDate =Form8->MonthCalendar1->Date;
 Query2->ParamByName("p2")->AsDate =Form8->MonthCalendar2->Date;
 Query2->Open();
@@ -958,7 +958,7 @@ float chas=0,km=0;
 int n=1; // íîìåğ ï/ï
 
 int vid_izm; /// Íàèìíîâàíèå (ò,êì,÷,ì/÷)
-int ed_tkm=0,ed_t=0,ed_mch=0;
+//int ed_tkm=0,ed_t=0,ed_mch=0;
 int sum_tkm=0,sum_t=0,sum_mch=0;
 float col_tkm=0,col_t=0,col_mch=0;
 
@@ -972,7 +972,7 @@ if (Form8->MonthCalendar1->Date > Form8->MonthCalendar2->Date)
 
 
  Query1->Close();
-Memo1->Lines->Add("Otchet s " + DateToStr(Form8->MonthCalendar1->Date ) + " po " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
+Memo1->Lines->Add("Îò÷åò ñ " + DateToStr(Form8->MonthCalendar1->Date ) + " ïî " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
 Memo1->Lines->Add("Ğååñòğ");
 Query1->ParamByName("p1")->AsDate =Form8->MonthCalendar1->Date;
 Query1->ParamByName("p2")->AsDate =Form8->MonthCalendar2->Date;
@@ -1042,19 +1042,19 @@ return;
                           if(vid_izm==2)
                          { sum_tkm= sum_tkm + Query1->FieldByName("Cost1")->AsInteger;   //êì
                            col_tkm=col_tkm + Query1->FieldByName("Km")->AsFloat;
-                           ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
+                      //     ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
 
                           }
                            if(vid_izm==3)
                          { sum_t= sum_t + Query1->FieldByName("Cost1")->AsInteger;   //êì
                            col_t=col_t + Query1->FieldByName("Km")->AsFloat;
-                           ed_t = Query1->FieldByName("Za1_km")->AsInteger;
+                     //      ed_t = Query1->FieldByName("Za1_km")->AsInteger;
 
                           }
                            if(vid_izm==4)
                          { sum_mch= sum_mch + Query1->FieldByName("Cost1")->AsInteger;   //êì
                            col_mch=col_mch + Query1->FieldByName("Km")->AsFloat;
-                           ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
+                        //   ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
 
                           }
 
@@ -1072,7 +1072,7 @@ return;
 
                              s1_v+=s1_m + s2_m  + int(cc*ch)+ sum_tkm + sum_t + sum_mch+sv;    // ÅÑËÈ ÌÀØÈÍÀ ÄĞÓÃÀß
                              s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=ed_mch=ed_t=ed_tkm=col_mch=col_t=col_tkm=sv=0;
+                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
 
 
 
@@ -1108,17 +1108,17 @@ return;
                               {
                                 sum_tkm=  Query1->FieldByName("Cost1")->AsInteger;   //êì
                                 col_tkm= Query1->FieldByName("Km")->AsFloat;
-                                ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
+                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
                               }
                                if(vid_izm==3)
                                 { sum_t= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_t= Query1->FieldByName("Km")->AsFloat;
-                                  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
+                                //  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
                                 }
                                 if(vid_izm==4)
                                 { sum_mch= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_mch= Query1->FieldByName("Km")->AsFloat;
-                                  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
+                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
                                 }
 
 
@@ -1133,7 +1133,7 @@ return;
 
                               s1_v+=s1_m + s2_m + int(cc*ch) + sum_tkm + sum_t + sum_mch+sv;    // ÅÑËÈ ÌÀØÈÍÀ ÄĞÓÃÀß
                              s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=ed_mch=ed_t=ed_tkm=col_mch=col_t=col_tkm=sv=0;
+                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
 
 
 
@@ -1172,17 +1172,17 @@ return;
                               {
                                 sum_tkm=  Query1->FieldByName("Cost1")->AsInteger;   //êì
                                 col_tkm= Query1->FieldByName("Km")->AsFloat;
-                                ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
+                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
                               }
                                if(vid_izm==3)
                                 { sum_t= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_t= Query1->FieldByName("Km")->AsFloat;
-                                  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
+                              //    ed_t = Query1->FieldByName("Za1_km")->AsInteger;
                                 }
                                 if(vid_izm==4)
                                 { sum_mch= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_mch= Query1->FieldByName("Km")->AsFloat;
-                                  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
+                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
                                 }
 
 
@@ -1196,7 +1196,7 @@ return;
 
                              s1_v+=s1_m + s2_m + int(cc*ch) + sum_tkm + sum_t + sum_mch+sv;    // ÅÑËÈ ÌÀØÈÍÀ ÄĞÓÃÀß
                              s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=ed_mch=ed_t=ed_tkm=col_mch=col_t=col_tkm=sv=0;
+                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
 
 
 
@@ -1243,17 +1243,17 @@ return;
                               {
                                 sum_tkm=  Query1->FieldByName("Cost1")->AsInteger;   //êì
                                 col_tkm= Query1->FieldByName("Km")->AsFloat;
-                                ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
+                             //   ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
                               }
                                if(vid_izm==3)
                                 { sum_t= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_t= Query1->FieldByName("Km")->AsFloat;
-                                  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
+                             //     ed_t = Query1->FieldByName("Za1_km")->AsInteger;
                                 }
                                 if(vid_izm==4)
                                 { sum_mch= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_mch= Query1->FieldByName("Km")->AsFloat;
-                                  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
+                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
                                 }
 
 
@@ -1268,7 +1268,7 @@ return;
 
                             s1_v+=s1_m + s2_m + int(cc*ch) + sum_tkm + sum_t + sum_mch+sv;    // ÅÑËÈ ÌÀØÈÍÀ ÄĞÓÃÀß
                              s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=ed_mch=ed_t=ed_tkm=col_mch=col_t=col_tkm=sv=0;
+                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
 
 
 
@@ -1328,17 +1328,17 @@ return;
                               {
                                 sum_tkm=  Query1->FieldByName("Cost1")->AsInteger;   //êì
                                 col_tkm= Query1->FieldByName("Km")->AsFloat;
-                                ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
+                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
                               }
                                if(vid_izm==3)
                                 { sum_t= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_t= Query1->FieldByName("Km")->AsFloat;
-                                  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
+                              //    ed_t = Query1->FieldByName("Za1_km")->AsInteger;
                                 }
                                 if(vid_izm==4)
                                 { sum_mch= Query1->FieldByName("Cost1")->AsInteger;   //êì
                                   col_mch= Query1->FieldByName("Km")->AsFloat;
-                                  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
+                               //   ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
                                 }
 
 
@@ -1357,7 +1357,7 @@ return;
 
                              s1_v+=s1_m + s2_m + int(cc*ch) + sum_tkm + sum_t + sum_mch;    // ÅÑËÈ ÌÀØÈÍÀ ÄĞÓÃÀß
                              s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=ed_mch=ed_t=ed_tkm=col_mch=col_t=col_tkm=sv=0;
+                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
 
                               n=1;
                               s1_ob+=s1_v;    // ÅÑËÈ òğàíñïîğò äğóãîé

@@ -1,6 +1,6 @@
 object Form8: TForm8
-  Left = 239
-  Top = 156
+  Left = 275
+  Top = 143
   BorderStyle = bsSingle
   Caption = #1054#1058#1063#1045#1058
   ClientHeight = 770
@@ -34,7 +34,7 @@ object Form8: TForm8
     Top = 30
     Width = 235
     Height = 189
-    Date = 40315.6703357523
+    Date = 40315.8004790972
     TabOrder = 0
   end
   object MonthCalendar2: TMonthCalendar
@@ -42,7 +42,7 @@ object Form8: TForm8
     Top = 254
     Width = 235
     Height = 189
-    Date = 40315.6703357523
+    Date = 40315.8004790972
     TabOrder = 1
   end
   object Memo1: TMemo

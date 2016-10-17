@@ -1463,9 +1463,21 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
     blank++ ;
     i=2   ;
     ///ситаем колво записей
+    i= Memo1->Lines->Count-3;
+    ShowMessage(i);
+    if(i <= 89)
+    blank=1;
+    else
+    {
+     if((89 < i)&& ( i<= 141))
+     blank=2;
+     else
+     {
+      blank= int((i-141)/52)+3;
+     }
 
-    ShowMessage(Memo1->Lines->Count) ;
-    while(i!=Memo1->Lines->Count )
+    }
+   /* while(i!=Memo1->Lines->Count )
      {
      i++;
       j++;
@@ -1473,7 +1485,7 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
       { blank++;
         j=0;
       }
-     }
+     }  */
 
      ShowMessage("Ќужно бланков: " + IntToStr(blank));
 
@@ -1500,7 +1512,7 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
 
 
 //—оздаем бланки дл€ заполнени€**********************************************************************
-      if (blank>1)
+      if (blank>2)
       {
        Variant v = App.OlePropertyGet("WorkSheets",1);
 
@@ -1520,7 +1532,7 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
   //     blank=3;
 
         int k=55;
-       for (; k<blank*55;k+=54)
+       for (; k<(blank-1)*55;k+=54)
        { v = App.OlePropertyGet("WorkSheets",1);
          v=v.OlePropertyGet("Cells", 54+k,1);
          v.OleProcedure("PasteSpecial");
@@ -1528,7 +1540,7 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
        }
 
        // ƒобавл€ем " сдал прин€л"
-        Sh=App.OlePropertyGet("WorkSheets",1);
+       Sh=App.OlePropertyGet("WorkSheets",1);
        Sh = Sh.OlePropertyGet("Range", "J1:P3");//выбрали
        Sh.OleProcedure("Select"); //
        Sh.OleProcedure("Copy");
@@ -1542,9 +1554,9 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
     // App.OlePropertySet("Visible",true);
 
 
-       j=0;
-       blank=0;
-       i=2;
+    if(blank==1)
+    {
+    j=0; blank=0;  i=2;
 
     while(i!=Memo1->Lines->Count )
      {
@@ -1554,17 +1566,43 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
       i++;
       j++;
       if(j==40)
-      j=43;
+      j=42;
       if (j==91)
       {
+       blank=blank+96;
+       j=0;
+      }
+     }
+    }
+    else
+    {
+    j=0; blank=0;  i=2;
 
-          blank=blank+108;
-                j=0;
+    while(i!=Memo1->Lines->Count )
+     {
 
+      toExcelCell2(15+j+blank,1, Memo1->Lines->Strings[i])   ;
+
+      i++;
+      j++;
+      if(j==40 && i==42)
+      j=42;
+      if(j==52 && i!=52)
+      j=54;
+      if (j==94&& i==94)
+      {
+       blank=blank+96;
+       j=0;
+      }
+      if(j==106)
+      {
+       blank=blank+108;
+       j=0;
       }
 
      }
 
+    }
      // ShowMessage("Exit") ;
 
   App.OlePropertySet("Visible",true);

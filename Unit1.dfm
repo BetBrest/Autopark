@@ -7,20 +7,20 @@ object Form1: TForm1
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -14
+  Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object Label1: TLabel
-    Left = 431
-    Top = 18
-    Width = 77
-    Height = 16
+    Left = 470
+    Top = 7
+    Width = 62
+    Height = 13
     Caption = 'Version_2.01'
   end
   object MainMenu1: TMainMenu

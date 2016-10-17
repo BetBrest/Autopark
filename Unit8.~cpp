@@ -1549,10 +1549,6 @@ v=v.OlePropertyGet("Cells", 109,1);
 
      // ShowMessage("Exit") ;
 
-    
-
-
-
   App.OlePropertySet("Visible",true);
   // освобождаем ресурсы
     Sh.Clear();

@@ -1455,10 +1455,32 @@ int printcar(int n,BOOL vidtr , int vid_izm, AnsiString f1,AnsiString f2, AnsiSt
 
 void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
 {
+ // считаем к-во бланков*****************************************************************************************
+ // считаем сколько нам понадобиться бланков  за каждый раойн +бланк(2стороны) + записи могут не влезтью
+  int blank=0;
+  int i=0,j=0;
+
+    blank++ ;
+    i=2   ;
+    ///ситаем колво записей
+
+    ShowMessage(Memo1->Lines->Count) ;
+    while(i!=Memo1->Lines->Count )
+     {
+     i++;
+      j++;
+      if(j==89)
+      { blank++;
+        j=0;
+      }
+     }
+
+     ShowMessage("Нужно бланков: " + IntToStr(blank));
 
   // устанавливаем путь к файлу шаблона
-     AnsiString sFile = ExtractFilePath(Application->ExeName)+"\\ACT2.xlt";
-
+     AnsiString sFile;
+     if (blank==1) sFile = ExtractFilePath(Application->ExeName)+"\\ACT2.xlt";
+     else sFile = ExtractFilePath(Application->ExeName)+"\\ACT2_1.xlt";
      // инициализируем Excel, открываем этот шаблон
      try {
        App=Variant::GetActiveObject("Excel.Application");
@@ -1475,58 +1497,54 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
       Application->MessageBox("Ошибка открытия шаблона Microsoft Excel!","Ошибка",MB_OK+MB_ICONERROR);
      }
 
-// считаем к-во бланков*****************************************************************************************
- // считаем сколько нам понадобиться бланков  за каждый раойн +бланк(2стороны) + записи могут не влезтью
-  int blank=0;
-    int i=0,j=0;
 
-
-
-
-    blank++ ;
-    i=2   ;
-    ///ситаем колво записей
-    while(i!=Memo1->Lines->Count )
-     {
-     i++;
-      j++;
-      if(j==89)
-      { blank++;
-        j=0;
-      }
-
-     }
-
-
-
-
-    ShowMessage("Нужно бланков: " + IntToStr(blank));
-    if(blank==0)
-    {
-    ShowMessage("Нет данных  для формирования! ");
-    return;
-    }
 
 //Создаем бланки для заполнения**********************************************************************
+      if (blank>1)
+      {
+       Variant v = App.OlePropertyGet("WorkSheets",1);
 
-          Sh = Sh.OlePropertyGet("Range", "A1:G108");//выбрали
-      Sh.OleProcedure("Select"); //
-        Sh.OleProcedure("Copy");
-   // blank=5;
-Variant v = App.OlePropertyGet("WorkSheets",1);
-int d;
-for (int k=109; k<blank*109;k+=109)
-{
-v=v.OlePropertyGet("Cells", 109,1);
-     v.OleProcedure("PasteSpecial");
-}
+      //cохроняеем надпись "сдал - принял "
+       Sh = Sh.OlePropertyGet("Range", "A160:G162");//выбрали
+       Sh.OleProcedure("Select"); //
+       Sh.OleProcedure("Copy");
+      // копируем надпись справа
+       v=v.OlePropertyGet("Cells", 1,9);
+       v.OleProcedure("PasteSpecial");
+
+       Sh=App.OlePropertyGet("WorkSheets",1);
+
+       Sh = Sh.OlePropertyGet("Range", "A55:G108");//выбрали
+       Sh.OleProcedure("Select"); //
+       Sh.OleProcedure("Copy");
+  //     blank=3;
+
+        int k=55;
+       for (; k<blank*55;k+=54)
+       { v = App.OlePropertyGet("WorkSheets",1);
+         v=v.OlePropertyGet("Cells", 54+k,1);
+         v.OleProcedure("PasteSpecial");
+
+       }
+
+       // Добавляем " сдал принял"
+        Sh=App.OlePropertyGet("WorkSheets",1);
+       Sh = Sh.OlePropertyGet("Range", "J1:P3");//выбрали
+       Sh.OleProcedure("Select"); //
+       Sh.OleProcedure("Copy");
+        v = App.OlePropertyGet("WorkSheets",1);
+        v=v.OlePropertyGet("Cells", 54+k-3,1);
+        v.OleProcedure("PasteSpecial");
+        Sh.OleProcedure("Delete");
+        Sh=App.OlePropertyGet("WorkSheets",1);
+      }
 //заполняем созданные бланки********************************************************************************************
     // App.OlePropertySet("Visible",true);
 
 
        j=0;
-          blank=0;
-         i=2;
+       blank=0;
+       i=2;
 
     while(i!=Memo1->Lines->Count )
      {

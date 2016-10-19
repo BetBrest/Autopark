@@ -1464,30 +1464,21 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
     i=2   ;
     ///ситаем колво записей
     i= Memo1->Lines->Count-3;
-    ShowMessage(i);
-    if(i <= 89)
+ //   ShowMessage(i);
+    if(i <= 96)
     blank=1;
     else
     {
-     if((89 < i)&& ( i<= 141))
+     if((96< i)&& ( i<= 148))
      blank=2;
      else
      {
-      blank= int((i-141)/52)+3;
+      blank= int((i-148)/52)+3;
      }
 
     }
-   /* while(i!=Memo1->Lines->Count )
-     {
-     i++;
-      j++;
-      if(j==89)
-      { blank++;
-        j=0;
-      }
-     }  */
 
-     ShowMessage("Нужно бланков: " + IntToStr(blank));
+    // ShowMessage("Нужно бланков: " + IntToStr(blank));
 
   // устанавливаем путь к файлу шаблона
      AnsiString sFile;
@@ -1561,17 +1552,11 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
     while(i!=Memo1->Lines->Count )
      {
 
-      toExcelCell2(15+j+blank,1, Memo1->Lines->Strings[i])   ;
+      toExcelCell2(8+j+blank,1, Memo1->Lines->Strings[i])   ;
 
       i++;
       j++;
-      if(j==40)
-      j=42;
-      if (j==91)
-      {
-       blank=blank+96;
-       j=0;
-      }
+      if(j==47) j=49;
      }
     }
     else
@@ -1581,17 +1566,17 @@ void __fastcall TForm8::Button6Click(TObject *Sender)   //реестр в excel
     while(i!=Memo1->Lines->Count )
      {
 
-      toExcelCell2(15+j+blank,1, Memo1->Lines->Strings[i])   ;
+      toExcelCell2(8+j+blank,1, Memo1->Lines->Strings[i])   ;
 
       i++;
       j++;
-      if(j==40 && i==42)
-      j=42;
+      if(j==47 && i==49)
+      j=49;
       if(j==52 && i!=52)
       j=54;
-      if (j==94&& i==94)
+      if (j==101 && i==101)
       {
-       blank=blank+96;
+       blank=blank+103;
        j=0;
       }
       if(j==106)

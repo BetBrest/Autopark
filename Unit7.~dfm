@@ -1,10 +1,10 @@
 object Form7: TForm7
-  Left = 417
-  Top = 159
+  Left = 413
+  Top = 205
   BorderStyle = bsSingle
   Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1091#1090#1077#1074#1086#1081
-  ClientHeight = 673
-  ClientWidth = 881
+  ClientHeight = 755
+  ClientWidth = 956
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -107,7 +107,7 @@ object Form7: TForm7
     ParentFont = False
   end
   object Label8: TLabel
-    Left = 155
+    Left = 179
     Top = 490
     Width = 66
     Height = 24
@@ -120,7 +120,7 @@ object Form7: TForm7
     ParentFont = False
   end
   object Label9: TLabel
-    Left = 155
+    Left = 179
     Top = 443
     Width = 57
     Height = 24
@@ -148,7 +148,7 @@ object Form7: TForm7
     Visible = False
   end
   object Label11: TLabel
-    Left = 716
+    Left = 740
     Top = 416
     Width = 100
     Height = 24
@@ -161,7 +161,7 @@ object Form7: TForm7
     ParentFont = False
   end
   object Label12: TLabel
-    Left = 439
+    Left = 463
     Top = 414
     Width = 218
     Height = 24
@@ -174,7 +174,7 @@ object Form7: TForm7
     ParentFont = False
   end
   object Label14: TLabel
-    Left = 283
+    Left = 307
     Top = 516
     Width = 44
     Height = 24
@@ -188,7 +188,7 @@ object Form7: TForm7
     Visible = False
   end
   object Label15: TLabel
-    Left = 497
+    Left = 521
     Top = 516
     Width = 133
     Height = 24
@@ -214,12 +214,27 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
   end
+  object SpeedButton1: TSpeedButton
+    Left = 440
+    Top = 440
+    Width = 33
+    Height = 33
+    Caption = '"+"'
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 440
+    Top = 480
+    Width = 33
+    Height = 33
+    Caption = '"+"'
+  end
   object MonthCalendar1: TMonthCalendar
     Left = 553
     Top = 17
     Width = 256
     Height = 275
-    Date = 40314.6429737616
+    Date = 40314.7806583218
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
@@ -230,8 +245,8 @@ object Form7: TForm7
     OnClick = MonthCalendar1Click
   end
   object Button1: TButton
-    Left = 678
-    Top = 591
+    Left = 702
+    Top = 631
     Width = 160
     Height = 40
     Caption = 'Ok'
@@ -353,7 +368,7 @@ object Form7: TForm7
     OnKeyPress = ComboBox6KeyPress
   end
   object Edit2: TEdit
-    Left = 224
+    Left = 248
     Top = 480
     Width = 177
     Height = 32
@@ -368,7 +383,7 @@ object Form7: TForm7
     OnKeyPress = Edit2KeyPress
   end
   object Edit3: TEdit
-    Left = 224
+    Left = 248
     Top = 443
     Width = 177
     Height = 32
@@ -400,7 +415,7 @@ object Form7: TForm7
     OnKeyPress = ComboBox7KeyPress
   end
   object Edit4: TEdit
-    Left = 657
+    Left = 681
     Top = 481
     Width = 181
     Height = 32
@@ -413,7 +428,7 @@ object Form7: TForm7
     TabOrder = 12
   end
   object Edit5: TEdit
-    Left = 657
+    Left = 681
     Top = 443
     Width = 181
     Height = 32
@@ -426,7 +441,7 @@ object Form7: TForm7
     TabOrder = 13
   end
   object Edit6: TEdit
-    Left = 470
+    Left = 494
     Top = 481
     Width = 149
     Height = 32
@@ -440,7 +455,7 @@ object Form7: TForm7
     OnKeyPress = Edit6KeyPress
   end
   object Edit7: TEdit
-    Left = 470
+    Left = 494
     Top = 443
     Width = 149
     Height = 32
@@ -454,7 +469,7 @@ object Form7: TForm7
     OnKeyPress = Edit7KeyPress
   end
   object Edit8: TEdit
-    Left = 224
+    Left = 248
     Top = 542
     Width = 178
     Height = 32
@@ -471,7 +486,7 @@ object Form7: TForm7
   object CheckBox1: TCheckBox
     Left = 21
     Top = 544
-    Width = 198
+    Width = 228
     Height = 21
     Caption = #1047#1072#1088#1087#1083#1072#1090#1072' '#1074' '#1074#1099#1093#1086#1076#1085#1099#1077' '#1076#1085#1080
     Font.Charset = DEFAULT_CHARSET
@@ -484,7 +499,7 @@ object Form7: TForm7
     OnClick = CheckBox1Click
   end
   object Edit9: TEdit
-    Left = 468
+    Left = 492
     Top = 542
     Width = 149
     Height = 32
@@ -516,7 +531,7 @@ object Form7: TForm7
   object CheckBox3: TCheckBox
     Left = 21
     Top = 474
-    Width = 109
+    Width = 124
     Height = 21
     Caption = #1058#1072#1088#1080#1092' '#1090#1086#1085#1085#1099
     Font.Charset = DEFAULT_CHARSET
@@ -544,7 +559,7 @@ object Form7: TForm7
     OnClick = CheckBox4Click
   end
   object Edit10: TEdit
-    Left = 658
+    Left = 682
     Top = 542
     Width = 180
     Height = 32
@@ -577,6 +592,65 @@ object Form7: TForm7
       '0%'
       '5%'
       '10%')
+  end
+  object Edit11: TEdit
+    Left = 248
+    Top = 584
+    Width = 178
+    Height = 32
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 24
+    Visible = False
+    OnKeyDown = Edit8KeyDown
+  end
+  object Edit12: TEdit
+    Left = 492
+    Top = 584
+    Width = 149
+    Height = 32
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 25
+    Visible = False
+    OnKeyDown = Edit9KeyDown
+  end
+  object Edit13: TEdit
+    Left = 682
+    Top = 584
+    Width = 180
+    Height = 32
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 26
+    Visible = False
+  end
+  object CheckBox5: TCheckBox
+    Left = 21
+    Top = 584
+    Width = 228
+    Height = 21
+    Caption = #1047#1072#1088#1087#1083#1072#1090#1072' '#1074'  '#1085#1086#1095#1085#1086#1077' '#1074#1088#1077#1084#1103
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 27
+    OnClick = CheckBox5Click
   end
   object Query1: TQuery
     DatabaseName = 'autopark2'

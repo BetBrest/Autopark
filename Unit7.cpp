@@ -7,8 +7,9 @@
 
 
 #pragma hdrstop
- #include "Unit6.h"
+#include "Unit6.h"
 #include "Unit7.h"
+#include "Unit9.h"
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -1161,4 +1162,44 @@ void __fastcall TForm7::ComboBox8KeyPress(TObject *Sender, char &Key)
 //---------------------------------------------------------------------------
 
 
+
+void __fastcall TForm7::CheckBox5Click(TObject *Sender)
+{
+
+   if (Form7->CheckBox5->Checked==true)
+
+    {
+
+       Form7->Label14->Visible=true;
+       Form7->Label15->Visible=true;
+       Form7->Edit11->Visible=true;
+       Form7->Edit12->Visible=true;
+       Edit13->Visible=true;
+       Edit11->SetFocus();
+
+    }
+   else
+    {  Form7->Label14->Visible=false;
+       Form7->Label15->Visible=false;
+       Form7->Edit11->Visible=false;
+       Form7->Edit12->Visible=false;
+       Form7->Edit13->Visible=false ;
+
+    }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm7::SpeedButton1Click(TObject *Sender)
+{
+      Form9->Visible=true;
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm7::SpeedButton2Click(TObject *Sender)
+{
+    Form9->Visible=true;
+}
+//---------------------------------------------------------------------------
 

@@ -12,6 +12,7 @@
 #include <DBTables.hpp>
 #include <DBGrids.hpp>
 #include <Grids.hpp>
+#include <Buttons.hpp>
 //---------------------------------------------------------------------------
 class TForm7 : public TForm
 {
@@ -61,6 +62,12 @@ __published:	// IDE-managed Components
         TQuery *Query4;
         TComboBox *ComboBox8;
         TLabel *Label13;
+        TEdit *Edit11;
+        TEdit *Edit12;
+        TEdit *Edit13;
+        TCheckBox *CheckBox5;
+        TSpeedButton *SpeedButton1;
+        TSpeedButton *SpeedButton2;
         void __fastcall MonthCalendar1Click(TObject *Sender);
         void __fastcall ComboBox1KeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
@@ -86,6 +93,8 @@ __published:	// IDE-managed Components
           TShiftState Shift);
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall ComboBox8KeyPress(TObject *Sender, char &Key);
+        void __fastcall CheckBox5Click(TObject *Sender);
+        void __fastcall SpeedButton1Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm7(TComponent* Owner);

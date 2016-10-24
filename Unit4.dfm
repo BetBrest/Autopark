@@ -1,10 +1,10 @@
 object Form4: TForm4
-  Left = 344
-  Top = 115
+  Left = 366
+  Top = 154
   BorderStyle = bsSingle
   Caption = #1052#1040#1064#1048#1053#1067
   ClientHeight = 798
-  ClientWidth = 1253
+  ClientWidth = 1366
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -31,7 +31,7 @@ object Form4: TForm4
   object DBGrid1: TDBGrid
     Left = 20
     Top = 39
-    Width = 1192
+    Width = 1325
     Height = 632
     DataSource = DataSource1
     Font.Charset = DEFAULT_CHARSET
@@ -104,6 +104,7 @@ object Form4: TForm4
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'Za1Km_10'
         Title.Caption = #1047#1072' 1'#1082#1084' +10%'
@@ -123,6 +124,30 @@ object Form4: TForm4
         FieldName = 'Za1MChas'
         Title.Alignment = taCenter
         Title.Caption = #1047#1072' 1 '#1084#1072#1096'/'#1095#1072#1089
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Za1MChas_5'
+        Title.Caption = #1047#1072' 1 '#1084'/'#1095' +5%'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Za1MChas_10'
+        Title.Caption = #1047#1072' 1 '#1084'/'#1095' 10%'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Zp_night'
+        Title.Caption = #1047'/'#1087#1083' '#1085#1086#1095#1085#1086#1077
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Zp_vyh'
+        Title.Caption = #1047'/'#1087#1083' '#1074#1099#1093#1086#1076#1085
         Visible = True
       end
       item
@@ -162,7 +187,7 @@ object Form4: TForm4
     OnClick = Button3Click
   end
   object Button4: TButton
-    Left = 967
+    Left = 1127
     Top = 679
     Width = 218
     Height = 61
@@ -299,6 +324,22 @@ object Form4: TForm4
     object Query1Za1Km_10: TFloatField
       FieldName = 'Za1Km_10'
       Origin = 'AUTOPARK2."cars.DB".Za1Km_10'
+    end
+    object Query1Zp_night: TFloatField
+      FieldName = 'Zp_night'
+      Origin = 'AUTOPARK2."cars.DB".Zp_night'
+    end
+    object Query1Zp_vyh: TFloatField
+      FieldName = 'Zp_vyh'
+      Origin = 'AUTOPARK2."cars.DB".Zp_vyh'
+    end
+    object Query1Za1MChas_5: TFloatField
+      FieldName = 'Za1MChas_5'
+      Origin = 'AUTOPARK2."cars.DB".Za1MChas_5'
+    end
+    object Query1Za1MChas_10: TFloatField
+      FieldName = 'Za1MChas_10'
+      Origin = 'AUTOPARK2."cars.DB".Za1MChas_10'
     end
   end
   object Query2: TQuery

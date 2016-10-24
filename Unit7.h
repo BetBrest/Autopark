@@ -99,6 +99,7 @@ __published:	// IDE-managed Components
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm7(TComponent* Owner);
+        bool flag_hours_or_km;
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm7 *Form7;

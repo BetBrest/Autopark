@@ -24,9 +24,16 @@ void __fastcall TForm9::Edit1KeyPress(TObject *Sender, char &Key)
  {
     Summa=StringSummaToFloat();
     Form9->Label1->Caption=FloatToStrF(Summa,ffFixed,10,2);
-    Form9->Label1->Caption=FloatToStrF(Summa,ffFixed,10,2);
-    Form7->Edit3->Text=FloatToStrF(Summa,ffFixed,10,2);
-    Form7->Edit3->SetFocus();
+    if(Form7->flag_hours_or_km==true)
+    {
+     Form7->Edit3->Text=FloatToStrF(Summa,ffFixed,10,2);
+     Form7->Edit3->SetFocus();
+    }
+    else
+    {
+     Form7->Edit2->Text=FloatToStrF(Summa,ffFixed,10,2);
+     Form7->Edit2->SetFocus();
+    }
     Form9->Visible=false;
  }
   if(Key == 0x2B )   // caps "+"

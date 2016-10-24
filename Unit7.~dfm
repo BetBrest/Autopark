@@ -228,13 +228,14 @@ object Form7: TForm7
     Width = 33
     Height = 33
     Caption = '"+"'
+    OnClick = SpeedButton2Click
   end
   object MonthCalendar1: TMonthCalendar
     Left = 553
     Top = 17
     Width = 256
     Height = 275
-    Date = 40314.7806583218
+    Date = 40314.8406603125
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20

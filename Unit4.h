@@ -44,6 +44,10 @@ __published:	// IDE-managed Components
         TCheckBox *CheckBox1;
         TFloatField *Query1Za1Km_5;
         TFloatField *Query1Za1Km_10;
+        TFloatField *Query1Zp_night;
+        TFloatField *Query1Zp_vyh;
+        TFloatField *Query1Za1MChas_5;
+        TFloatField *Query1Za1MChas_10;
         void __fastcall Button1Click(TObject *Sender);
         void __fastcall Button2Click(TObject *Sender);
         void __fastcall Button3Click(TObject *Sender);

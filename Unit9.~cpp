@@ -22,12 +22,14 @@ void __fastcall TForm9::Edit1KeyPress(TObject *Sender, char &Key)
 
  if(Key == VK_RETURN )
  {
+    Summa=StringSummaToFloat();
+    Form9->Label1->Caption=FloatToStrF(Summa,ffFixed,10,2);
     Form9->Label1->Caption=FloatToStrF(Summa,ffFixed,10,2);
     Form7->Edit3->Text=FloatToStrF(Summa,ffFixed,10,2);
     Form7->Edit3->SetFocus();
     Form9->Visible=false;
  }
-  if(Key == 0x2B )
+  if(Key == 0x2B )   // caps "+"
   {
    Summa=StringSummaToFloat();
    Form9->Label1->Caption=FloatToStrF(Summa,ffFixed,10,2);

@@ -1197,3 +1197,9 @@ void __fastcall TForm7::SpeedButton1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+void __fastcall TForm7::SpeedButton2Click(TObject *Sender)
+{
+    Form9->Visible=true;
+}
+//---------------------------------------------------------------------------
+

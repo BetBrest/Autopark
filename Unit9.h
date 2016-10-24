@@ -13,6 +13,7 @@ class TForm9 : public TForm
 __published:	// IDE-managed Components
         TEdit *Edit1;
         TLabel *Label1;
+        TLabel *Label2;
         void __fastcall Edit1KeyPress(TObject *Sender, char &Key);
 private:	// User declarations
 public:		// User declarations

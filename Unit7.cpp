@@ -972,6 +972,7 @@ void __fastcall TForm7::CheckBox2Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -984,6 +985,7 @@ void __fastcall TForm7::CheckBox2Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
     Edit4->Clear();
     Edit5->Clear();
     Edit6->Clear();
@@ -1007,6 +1009,7 @@ void __fastcall TForm7::CheckBox3Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -1019,6 +1022,7 @@ void __fastcall TForm7::CheckBox3Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
 
     Edit4->Clear();
     Edit5->Clear();
@@ -1041,6 +1045,7 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -1053,6 +1058,7 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
 
     Edit4->Clear();
     Edit5->Clear();
@@ -1192,14 +1198,18 @@ void __fastcall TForm7::CheckBox5Click(TObject *Sender)
 
 void __fastcall TForm7::SpeedButton1Click(TObject *Sender)
 {
+      flag_hours_or_km=true;
       Form9->Visible=true;
+      Form9->Edit1->Text="";
 
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm7::SpeedButton2Click(TObject *Sender)
 {
+    flag_hours_or_km=false;
     Form9->Visible=true;
+    Form9->Edit1->Text="";
 }
 //---------------------------------------------------------------------------
 

@@ -29,9 +29,7 @@ void __fastcall TForm5::ComboBox2Change(TObject *Sender)
 void __fastcall TForm5::FormActivate(TObject *Sender)
 {
     Form5->ComboBox2->SetFocus();
-
-
-
+ 
 }
 //---------------------------------------------------------------------------
 
@@ -99,64 +97,58 @@ void __fastcall TForm5::Edit1KeyPress(TObject *Sender, char &Key)
 
 void __fastcall TForm5::ComboBox1KeyPress(TObject *Sender, char &Key)
 {
-  //ShowMessage(Form5->ComboBox1->Text);
+//ShowMessage(Form5->ComboBox1->Text);
+ if(Key == VK_RETURN )
+ {
+  if (Form5->ComboBox2->Text=="Автотранспорт")
+  {
+   Form5->CheckBox2->Caption="Накрутки за 1 км +5%, +10 %";
+   Form5->CheckBox3->Caption="Накрутки за 1 м/ч +5%, +10 %";
 
-
-    if(Key == VK_RETURN )
+   if (Form5->ComboBox1->Text=="Седельные тягачи" || Form5->ComboBox1->Text=="cедельные тягачи")
+   {// формируем форму заполнения для тягачей поля //
+     // ShowMessage("тягачи");
+     Form5->Label8->Visible=true;
+     Form5->lbl1->Visible=true;
+     Form5->CheckListBox1->Visible=true;
+     Form5->Label4->Caption="За 1 час :" ;
+     Form5->Label5->Caption="За 1 км :" ;
+   }
+   else
+   {
+    //   ShowMessage("автомобили");
+    Form5->Label8->Visible=true;
+    Form5->lbl1->Visible=false;
+    Form5->CheckListBox1->Visible=false;
+    Form5->Label4->Caption="За 1 час :" ;
+    Form5->Label5->Caption="За 1 км :" ;
+    if (Form5->ComboBox1->Text=="Бетономешалки")
     {
-       if (Form5->ComboBox2->Text=="Автотранспорт")
-        {
-          if (Form5->ComboBox1->Text=="Седельные тягачи" || Form5->ComboBox1->Text=="cедельные тягачи")
-          { // формируем форму заполнения для тягачей поля //
-           // ShowMessage("тягачи");
-            Form5->Label8->Visible=true;
-           Form5->lbl1->Visible=true;
-           Form5->CheckListBox1->Visible=true;
-          Form5->Label4->Caption="За 1 час :" ;
-          Form5->Label5->Caption="За 1 км :" ;
-
-
-          }
-           else
-           {
-
-               //   ShowMessage("автомобили");
-
-            Form5->Label8->Visible=true;
-           Form5->lbl1->Visible=false;
-           Form5->CheckListBox1->Visible=false;
-          Form5->Label4->Caption="За 1 час :" ;
-          Form5->Label5->Caption="За 1 км :" ;
-
-          if (Form5->ComboBox1->Text=="Бетономешалки")
-         {
-          //ShowMessage("Бетономешалки");
-
-          Form5->Label8->Visible=false;
-           Form5->lbl1->Visible=false;
-           Form5->CheckListBox1->Visible=false;
-          Form5->Label4->Caption="За 1 тонну" ;
-          Form5->Label5->Caption="За 1 т/км" ;
-          }
-
-
-          }
-
-         }
-
-         else
-          if (Form5->ComboBox2->Text=="Механизмы")
-         {
-          ShowMessage("механизмы");
-
-          Form5->Label8->Visible=false;
-           Form5->lbl1->Visible=false;
-           Form5->CheckListBox1->Visible=false;
-          Form5->Label4->Caption="За 1 час жилье" ;
-          Form5->Label5->Caption="За 1 час прочие" ;
-          }
-     Form5->Edit1->SetFocus();
+     //ShowMessage("Бетономешалки");
+     Form5->Label8->Visible=false;
+     Form5->lbl1->Visible=false;
+     Form5->CheckListBox1->Visible=false;
+     Form5->Label4->Caption="За 1 тонну" ;
+     Form5->Label5->Caption="За 1 т/км" ;
     }
+   }
+  }
+  else
+  if (Form5->ComboBox2->Text=="Механизмы")
+  {
+   ShowMessage("механизмы");
+   Form5->Label8->Visible=false;
+   Form5->lbl1->Visible=false;
+   Form5->CheckListBox1->Visible=false;
+   Form5->Label4->Caption="За 1 час жилье" ;
+   Form5->Label5->Caption="За 1 час прочие" ;
+   Form5->CheckBox2->Caption="Накрутки за 1 час жилье +5%, +10 %";
+   Form5->CheckBox3->Caption="Накрутки за 1 час прочие +5%, +10 %";
+
+  }
+
+  Form5->Edit1->SetFocus();
+ }
 }
 //---------------------------------------------------------------------------
 
@@ -193,7 +185,7 @@ void __fastcall TForm5::Edit5KeyPress(TObject *Sender, char &Key)
        Form5->lbl1->Visible=true;
        Form5->CheckListBox1->Visible=true;
 
-       Query1->Close();
+         Query1->Close();
          Query1->SQL->Clear();
          Query1->SQL->Add("select DISTINCT Marka from Cars where Type=\"Полуприцепы\"");
          Query1->Open();
@@ -223,164 +215,145 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
 
   if (Form5->ComboBox2->Text=="Механизмы")
   { // заполняем данные для механизмов
-      ShowMessage("заполняем данные для механизмов");
+    ShowMessage("заполняем данные для механизмов");
+    Form5->Query2->First();            // перебираем все элементы и проверяем есть такие
 
-     Form5->Query2->First();            // перебираем все элементы и проверяем есть такие
-   while ( !Form5->Query2->Eof)
-      {
-
-        if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
-       {
-       ShowMessage("Объект с таким именем существует !!!") ;
-
-        return;
-        }
-         Form5->Query2->Next();
-      }
+    while ( !Form5->Query2->Eof)
+    {
+     if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
+     {
+      ShowMessage("Объект с таким именем существует !!!") ;
+      return;
+     }
+     Form5->Query2->Next();
+    }
 
     /// если проверка пройдена добавляем объект
-   Form5-> Query2->Close();
+    Form5-> Query2->Close();
 
-
-   Form5-> Query2->RequestLive=true;
-   Form5->  Query2->Open();
-        if(! Form5->Query2->Prepared)
+    Form5-> Query2->RequestLive=true;
+    Form5->  Query2->Open();
+    if(! Form5->Query2->Prepared)
     Form5->Query2->Prepare();
+    Form5->Query2->Insert();
 
-
-
-
-        Form5->Query2->Insert();
-
-
-        Form5->Query2->FieldByName("Vidtr")->AsBoolean= false;
-        Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
-        Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
-        Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1chas_other")->AsInteger =  StrToInt(Form5->Edit5->Text);
-        Form5->Query2->Post();
+    Form5->Query2->FieldByName("Vidtr")->AsBoolean= false;
+    Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
+    Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
+    Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
+    Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+    Form5->Query2->FieldByName("Za1chas_other")->AsFloat =  StrToFloat(Form5->Edit5->Text);
+    if(Form5->CheckBox4->Checked==true)
+    {
+     Form5->Query2->FieldByName("Zp_night")->AsFloat=StrToFloat(Form5->Edit10->Text);
+     Form5->Query2->FieldByName("Zp_vyh")->AsFloat=StrToFloat(Form5->Edit11->Text);
+    }
+    Form5->Query2->Post();
   }
   else
   if (Form5->ComboBox1->Text=="Седельные тягачи" && Form5->ComboBox2->Text=="Автотранспорт")
   { // заполняем данные для тягачей
-     ShowMessage("заполняем данные для тягачей");
-
-    
-          Form5->Query2->First();            // перебираем все элементы и проверяем есть такие
+   ShowMessage("заполняем данные для тягачей");
+   Form5->Query2->First();            // перебираем все элементы и проверяем есть такие
    while ( !Form5->Query2->Eof)
-      {
+   {
+    if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
+     {
+      ShowMessage("Объект с таким именем существует !!!") ;
+      return;
+     }
+    Form5->Query2->Next();
+   }
 
-        if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
-       {
-       ShowMessage("Объект с таким именем существует !!!") ;
-
-        return;
-        }
-         Form5->Query2->Next();
-      }
-
-    /// если проверка пройдена добавляем объект
+    // если проверка пройдена добавляем объект
    Form5-> Query2->Close();
-
-
    Form5-> Query2->RequestLive=true;
    Form5->  Query2->Open();
-        if(! Form5->Query2->Prepared)
-    Form5->Query2->Prepare();
+   if(! Form5->Query2->Prepared)
+   Form5->Query2->Prepare();
+   Form5->Query2->Insert();
+   Form5->Query2->FieldByName("Vidtr")->AsBoolean= true;
+   Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
+   Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
+   Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
+   Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+   Form5->Query2->FieldByName("Za1km")->AsFloat =  StrToFloat(Form5->Edit5->Text);
+   if (CheckBox2->Checked==true)
+   {
+    Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
+    Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
+   }
 
+   if (CheckBox1->Checked==true)
+   Form5->Query2->FieldByName("Za1MChas")->AsFloat =  StrToFloat(Form5->Edit2->Text);
+   if(Form5->CheckBox4->Checked==true)// зарплата
+   {
+    Form5->Query2->FieldByName("Zp_night")->AsFloat=StrToFloat(Form5->Edit10->Text);
+    Form5->Query2->FieldByName("Zp_vyh")->AsFloat=StrToFloat(Form5->Edit11->Text);
+   }
 
+   AnsiString pric="";
+   for (int i =0;i< Form5->CheckListBox1->Items->Count; i++ )
+   {
+    if (CheckListBox1->Checked[i]==true)
+    pric=pric  + CheckListBox1->Items->Strings[i]+ " ";
+   }
 
-
-        Form5->Query2->Insert();
-
-
-        Form5->Query2->FieldByName("Vidtr")->AsBoolean= true;
-        Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
-        Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
-        Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1km")->AsInteger =  StrToInt(Form5->Edit5->Text);
-        if (CheckBox2->Checked==true)
-        {
-          Form5->Query2->FieldByName("Za1km_5")->AsInteger =  StrToInt(Form5->Edit6->Text);
-          Form5->Query2->FieldByName("Za1km_10")->AsInteger =  StrToInt(Form5->Edit7->Text);
-
-        }
-
-        if (CheckBox1->Checked==true)
-         Form5->Query2->FieldByName("Za1MChas")->AsInteger =  StrToInt(Form5->Edit2->Text);
-      AnsiString pric="";
-      for (int i =0;i< Form5->CheckListBox1->Items->Count; i++ )
-      { if (CheckListBox1->Checked[i]==true)
-        pric=pric  + CheckListBox1->Items->Strings[i]+ " ";
-
-      }
-       // ShowMessage(pric);
-        Form5->Query2->FieldByName("Pricep")->AsString  = pric;
-
-              Form5->Query2->Post();
-
-
+   Form5->Query2->FieldByName("Pricep")->AsString  = pric;
+   Form5->Query2->Post();
   }
   else
    if (Form5->ComboBox1->Text!="Седельные тягачи" && Form5->ComboBox2->Text=="Автотранспорт")
-  { // заполняем данные для автотранспорта
-        ShowMessage(" заполняем данные для автотранспорта");
-
-
-
-          Form5->Query2->First();            // перебираем все элементы и проверяем есть такие
-   while ( !Form5->Query2->Eof)
-      {
-
-        if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
+   { // заполняем данные для автотранспорта
+    ShowMessage(" заполняем данные для автотранспорта");
+    Form5->Query2->First();  // перебираем все элементы и проверяем есть такие
+    while ( !Form5->Query2->Eof)
+     {
+      if  (Form5->Query2->FieldByName("Marka") ->AsString == Form5->Edit1->Text && Form5->Query2->FieldByName("Govnumber") ->AsString == Form5->Edit3->Text)
        {
-       ShowMessage("Объект с таким именем существует !!!") ;
-
+        ShowMessage("Объект с таким именем существует !!!") ;
         return;
-        }
-         Form5->Query2->Next();
-      }
+       }
+      Form5->Query2->Next();
+     }
 
-    /// если проверка пройдена добавляем объект
-   Form5-> Query2->Close();
-
-
-   Form5-> Query2->RequestLive=true;
-   Form5->  Query2->Open();
-        if(! Form5->Query2->Prepared)
+    // если проверка пройдена добавляем объект
+    Form5-> Query2->Close();
+    Form5-> Query2->RequestLive=true;
+    Form5->  Query2->Open();
+    if(! Form5->Query2->Prepared)
     Form5->Query2->Prepare();
-
-
-
-
-        Form5->Query2->Insert();
-
-
-        Form5->Query2->FieldByName("Vidtr")->AsBoolean= true;
-        Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
-        Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
-        Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
-        Form5->Query2->FieldByName("Za1chas")->AsInteger = StrToInt(Form5->Edit4->Text);
-        Form5->Query2->FieldByName("Za1km")->AsInteger =  StrToInt(Form5->Edit5->Text);
-         if (CheckBox2->Checked==true)
-        {
-          Form5->Query2->FieldByName("Za1km_5")->AsInteger =  StrToInt(Form5->Edit6->Text);
-          Form5->Query2->FieldByName("Za1km_10")->AsInteger =  StrToInt(Form5->Edit7->Text);
-
-        }
-         if (CheckBox1->Checked==true)
-         Form5->Query2->FieldByName("Za1MChas")->AsInteger =  StrToInt(Form5->Edit2->Text);
-        Form5->Query2->Post();
-
-
-  }
-ShowMessage("Добавили!") ;
-Form5->Visible=false;
-//обновили таблицу
-Form4->Query1->Close();
-Form4->Query1->Open();
+    Form5->Query2->Insert();
+    Form5->Query2->FieldByName("Vidtr")->AsBoolean= true;
+    Form5->Query2->FieldByName("Type")->AsString=  Form5->ComboBox1->Text;
+    Form5->Query2->FieldByName("Marka")->AsString = Form5->Edit1->Text;
+    Form5->Query2->FieldByName("Govnumber")->AsString = Form5->Edit3->Text;
+    Form5->Query2->FieldByName("Za1chas")->AsFloat = StrToFloat(Form5->Edit4->Text);
+    Form5->Query2->FieldByName("Za1km")->AsFloat =  StrToFloat(Form5->Edit5->Text);
+    if (CheckBox2->Checked==true)
+    {
+     Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
+     Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
+    }
+    if (CheckBox3->Checked==true)
+    {
+     Form5->Query2->FieldByName("Za1MChas_5")->AsFloat =  StrToFloat(Form5->Edit8->Text);
+     Form5->Query2->FieldByName("Za1MChas_10")->AsFloat =  StrToFloat(Form5->Edit9->Text);
+    }
+    if (CheckBox1->Checked==true)
+    Form5->Query2->FieldByName("Za1MChas")->AsFloat =  StrToFloat(Form5->Edit2->Text);
+    if(Form5->CheckBox4->Checked==true)
+    {
+     Form5->Query2->FieldByName("Zp_night")->AsFloat=StrToFloat(Form5->Edit10->Text);
+     Form5->Query2->FieldByName("Zp_vyh")->AsFloat=StrToFloat(Form5->Edit11->Text);
+    }
+    Form5->Query2->Post();
+   }
+  ShowMessage("Добавили!") ;
+  Form5->Visible=false;
+  //обновили таблицу
+  Form4->Query1->Close();
+  Form4->Query1->Open();
 }
 //---------------------------------------------------------------------------
 
@@ -413,8 +386,11 @@ void __fastcall TForm5::CheckBox2Click(TObject *Sender)
 
 void __fastcall TForm5::CheckBox1Click(TObject *Sender)
 {
-   if (CheckBox1->Checked==true)
+  if (CheckBox1->Checked==true)
+  {
   Edit2->Visible=true;
+  Form5->Edit2->SetFocus();
+  }
   else
   Edit2->Visible=false;
 }
@@ -435,6 +411,90 @@ void __fastcall TForm5::Edit7KeyPress(TObject *Sender, char &Key)
     {
      Form5->Button1->SetFocus();
     }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::CheckBox3Click(TObject *Sender)
+{
+   if (CheckBox3->Checked==true)
+  {
+   Edit8->Visible=true;
+   Edit9->Visible=true;
+   Label9->Visible=true;
+   Label10->Visible=true;
+   Form5->Edit8->SetFocus();
+  }
+  else
+  {
+   Edit8->Visible=false;
+   Edit9->Visible=false;
+   Label9->Visible=false;
+   Label10->Visible=false;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::Edit8KeyPress(TObject *Sender, char &Key)
+{
+  if(Key == VK_RETURN )
+    {
+     Form5->Edit9->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::Edit2KeyPress(TObject *Sender, char &Key)
+{
+  if(Key == VK_RETURN )
+    {
+     Form5->Button1->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::CheckBox4Click(TObject *Sender)
+{
+   if (CheckBox4->Checked==true)
+  {
+   Edit10->Visible=true;
+   Edit11->Visible=true;
+   Label12->Visible=true;
+   Label13->Visible=true;
+   Form5->Edit10->SetFocus();
+  }
+  else
+  {
+   Edit10->Visible=false;
+   Edit11->Visible=false;
+   Label12->Visible=false;
+   Label13->Visible=false;
+  }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::Edit10KeyPress(TObject *Sender, char &Key)
+{
+     if(Key == VK_RETURN )
+    {
+     Form5->Edit11->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::Edit11KeyPress(TObject *Sender, char &Key)
+{
+  if(Key == VK_RETURN )
+    {
+     Form5->Button1->SetFocus();
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::FormClose(TObject *Sender, TCloseAction &Action)
+{
+Form5->Query1->Close();
+Form5->Query2->Close();
 }
 //---------------------------------------------------------------------------
 

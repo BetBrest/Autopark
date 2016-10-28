@@ -44,6 +44,16 @@ __published:	// IDE-managed Components
         TEdit *Edit7;
         TLabel *Label6;
         TLabel *Label7;
+        TLabel *Label9;
+        TLabel *Label10;
+        TCheckBox *CheckBox3;
+        TEdit *Edit8;
+        TEdit *Edit9;
+        TLabel *Label12;
+        TLabel *Label13;
+        TCheckBox *CheckBox4;
+        TEdit *Edit10;
+        TEdit *Edit11;
         void __fastcall ComboBox2Change(TObject *Sender);
         void __fastcall FormActivate(TObject *Sender);
         void __fastcall ComboBox2KeyPress(TObject *Sender, char &Key);
@@ -57,6 +67,13 @@ __published:	// IDE-managed Components
         void __fastcall CheckBox2Click(TObject *Sender);
         void __fastcall Edit6KeyPress(TObject *Sender, char &Key);
         void __fastcall Edit7KeyPress(TObject *Sender, char &Key);
+        void __fastcall CheckBox3Click(TObject *Sender);
+        void __fastcall Edit8KeyPress(TObject *Sender, char &Key);
+        void __fastcall Edit2KeyPress(TObject *Sender, char &Key);
+        void __fastcall CheckBox4Click(TObject *Sender);
+        void __fastcall Edit10KeyPress(TObject *Sender, char &Key);
+        void __fastcall Edit11KeyPress(TObject *Sender, char &Key);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm5(TComponent* Owner);

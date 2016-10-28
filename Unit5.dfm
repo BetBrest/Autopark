@@ -1,6 +1,6 @@
 object Form5: TForm5
-  Left = 1750
-  Top = 131
+  Left = 395
+  Top = 202
   BorderStyle = bsSingle
   Caption = #1044#1086#1073#1072#1074#1083#1077#1085#1080#1077' '#1084#1072#1096#1080#1085#1099
   ClientHeight = 508
@@ -109,7 +109,7 @@ object Form5: TForm5
   object Label12: TLabel
     Left = 468
     Top = 76
-    Width = 86
+    Width = 79
     Height = 13
     Caption = #1074' '#1085#1086#1095#1085#1086#1077' '#1074#1088#1077#1084#1103
     Visible = False
@@ -117,7 +117,7 @@ object Form5: TForm5
   object Label13: TLabel
     Left = 422
     Top = 119
-    Width = 139
+    Width = 132
     Height = 13
     Caption = #1047#1072#1088#1087#1083#1072#1090#1072' '#1074' '#1074#1099#1093#1086#1076#1085#1099#1077' '#1076#1085#1080
     Visible = False
@@ -126,7 +126,7 @@ object Form5: TForm5
     Left = 185
     Top = 136
     Width = 185
-    Height = 24
+    Height = 21
     TabOrder = 0
     OnKeyPress = Edit3KeyPress
   end
@@ -134,7 +134,7 @@ object Form5: TForm5
     Left = 185
     Top = 176
     Width = 185
-    Height = 24
+    Height = 21
     TabOrder = 1
     Text = '0'
     OnKeyPress = Edit4KeyPress
@@ -143,7 +143,7 @@ object Form5: TForm5
     Left = 185
     Top = 216
     Width = 185
-    Height = 24
+    Height = 21
     TabOrder = 2
     Text = '0'
     OnKeyPress = Edit5KeyPress
@@ -155,13 +155,14 @@ object Form5: TForm5
     Height = 21
     ItemHeight = 13
     TabOrder = 3
+    OnCloseUp = ComboBox1CloseUp
     OnKeyPress = ComboBox1KeyPress
   end
   object Edit1: TEdit
     Left = 185
     Top = 104
     Width = 185
-    Height = 24
+    Height = 21
     TabOrder = 4
     OnKeyPress = Edit1KeyPress
   end
@@ -175,6 +176,7 @@ object Form5: TForm5
     TabOrder = 5
     Text = #1040#1074#1090#1086#1090#1088#1072#1085#1089#1087#1086#1088#1090
     OnChange = ComboBox2Change
+    OnCloseUp = ComboBox2CloseUp
     OnKeyPress = ComboBox2KeyPress
     Items.Strings = (
       #1040#1074#1090#1086#1090#1088#1072#1085#1089#1087#1086#1088#1090
@@ -201,7 +203,7 @@ object Form5: TForm5
     Left = 400
     Top = 278
     Width = 185
-    Height = 24
+    Height = 21
     TabOrder = 8
     Text = '0'
     Visible = False
@@ -229,7 +231,7 @@ object Form5: TForm5
     Left = 424
     Top = 196
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 11
     Text = '0'
     Visible = False
@@ -239,7 +241,7 @@ object Form5: TForm5
     Left = 424
     Top = 220
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 12
     Text = '0'
     Visible = False
@@ -258,7 +260,7 @@ object Form5: TForm5
     Left = 424
     Top = 335
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 14
     Text = '0'
     Visible = False
@@ -268,7 +270,7 @@ object Form5: TForm5
     Left = 424
     Top = 359
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 15
     Text = '0'
     Visible = False
@@ -287,7 +289,7 @@ object Form5: TForm5
     Left = 419
     Top = 94
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 17
     Text = '0'
     Visible = False
@@ -297,7 +299,7 @@ object Form5: TForm5
     Left = 421
     Top = 135
     Width = 121
-    Height = 24
+    Height = 21
     TabOrder = 18
     Text = '0'
     Visible = False

@@ -74,6 +74,8 @@ __published:	// IDE-managed Components
         void __fastcall Edit10KeyPress(TObject *Sender, char &Key);
         void __fastcall Edit11KeyPress(TObject *Sender, char &Key);
         void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall ComboBox2CloseUp(TObject *Sender);
+        void __fastcall ComboBox1CloseUp(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm5(TComponent* Owner);

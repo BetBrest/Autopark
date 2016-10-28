@@ -77,12 +77,12 @@ void __fastcall TForm5::ComboBox2KeyPress(TObject *Sender, char &Key)
 
      }
 
-
-
-
     Form5->ComboBox1->SetFocus();
     }
-
+     /*if(Key )
+     {
+      ShowMessage(Key);
+     } */
 }
 //---------------------------------------------------------------------------
 
@@ -248,6 +248,19 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
      Form5->Query2->FieldByName("Zp_night")->AsFloat=StrToFloat(Form5->Edit10->Text);
      Form5->Query2->FieldByName("Zp_vyh")->AsFloat=StrToFloat(Form5->Edit11->Text);
     }
+     if (CheckBox2->Checked==true)
+   {
+    Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
+    Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
+   }
+
+   if (CheckBox3->Checked==true)
+   {
+    Form5->Query2->FieldByName("Za1MChas_5")->AsFloat =  StrToFloat(Form5->Edit8->Text);
+    Form5->Query2->FieldByName("Za1MChas_10")->AsFloat =  StrToFloat(Form5->Edit9->Text);
+   }
+
+
     Form5->Query2->Post();
   }
   else
@@ -282,6 +295,12 @@ void __fastcall TForm5::Button1Click(TObject *Sender)
    {
     Form5->Query2->FieldByName("Za1km_5")->AsFloat =  StrToFloat(Form5->Edit6->Text);
     Form5->Query2->FieldByName("Za1km_10")->AsFloat =  StrToFloat(Form5->Edit7->Text);
+   }
+
+   if (CheckBox3->Checked==true)
+   {
+    Form5->Query2->FieldByName("Za1MChas_5")->AsFloat =  StrToFloat(Form5->Edit8->Text);
+    Form5->Query2->FieldByName("Za1MChas_10")->AsFloat =  StrToFloat(Form5->Edit9->Text);
    }
 
    if (CheckBox1->Checked==true)
@@ -495,6 +514,105 @@ void __fastcall TForm5::FormClose(TObject *Sender, TCloseAction &Action)
 {
 Form5->Query1->Close();
 Form5->Query2->Close();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::ComboBox2CloseUp(TObject *Sender)
+{
+if( ComboBox2->ItemIndex==0)
+     {
+       // Если выбран автотранспорт
+         Query1->Close();
+         Query1->SQL->Clear();
+         Query1->SQL->Add("select DISTINCT Type from Cars where Vidtr=True");
+         Query1->Open();
+         Query1->First();
+          Form5->ComboBox1->Items->Clear();
+         while ( !Query1->Eof)
+          {
+                 Form5->ComboBox1->Items->Add(Query1->FieldByName("Type")->AsString);
+                 Query1->Next();
+           }
+          Form5->ComboBox1->ItemIndex=0;
+
+     }
+     else if( ComboBox2->ItemIndex==1)
+     {
+       // Если выбраны механизмы
+       Query1->Close();
+         Query1->SQL->Clear();
+         Query1->SQL->Add("select DISTINCT Type from Cars where Vidtr=False");
+         Query1->Open();
+         Query1->First();
+          Form5->ComboBox1->Items->Clear();
+         while ( !Query1->Eof)
+          {
+                 Form5->ComboBox1->Items->Add(Query1->FieldByName("Type")->AsString);
+                 Query1->Next();
+           }
+          Form5->ComboBox1->ItemIndex=0;
+     }
+     else
+     {
+     ShowMessage("Выберите катагорию автотранспорт или механизмы");
+      return;
+
+     }
+
+    Form5->ComboBox1->SetFocus();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm5::ComboBox1CloseUp(TObject *Sender)
+{
+if (Form5->ComboBox2->Text=="Автотранспорт")
+  {
+   Form5->CheckBox2->Caption="Накрутки за 1 км +5%, +10 %";
+   Form5->CheckBox3->Caption="Накрутки за 1 м/ч +5%, +10 %";
+
+   if (Form5->ComboBox1->Text=="Седельные тягачи" || Form5->ComboBox1->Text=="cедельные тягачи")
+   {// формируем форму заполнения для тягачей поля //
+     // ShowMessage("тягачи");
+     Form5->Label8->Visible=true;
+     Form5->lbl1->Visible=true;
+     Form5->CheckListBox1->Visible=true;
+     Form5->Label4->Caption="За 1 час :" ;
+     Form5->Label5->Caption="За 1 км :" ;
+   }
+   else
+   {
+    //   ShowMessage("автомобили");
+    Form5->Label8->Visible=true;
+    Form5->lbl1->Visible=false;
+    Form5->CheckListBox1->Visible=false;
+    Form5->Label4->Caption="За 1 час :" ;
+    Form5->Label5->Caption="За 1 км :" ;
+    if (Form5->ComboBox1->Text=="Бетономешалки")
+    {
+     //ShowMessage("Бетономешалки");
+     Form5->Label8->Visible=false;
+     Form5->lbl1->Visible=false;
+     Form5->CheckListBox1->Visible=false;
+     Form5->Label4->Caption="За 1 тонну" ;
+     Form5->Label5->Caption="За 1 т/км" ;
+    }
+   }
+  }
+  else
+  if (Form5->ComboBox2->Text=="Механизмы")
+  {
+   ShowMessage("механизмы");
+   Form5->Label8->Visible=false;
+   Form5->lbl1->Visible=false;
+   Form5->CheckListBox1->Visible=false;
+   Form5->Label4->Caption="За 1 час жилье" ;
+   Form5->Label5->Caption="За 1 час прочие" ;
+   Form5->CheckBox2->Caption="Накрутки за 1 час жилье +5%, +10 %";
+   Form5->CheckBox3->Caption="Накрутки за 1 час прочие +5%, +10 %";
+
+  }
+
+  Form5->Edit1->SetFocus();        
 }
 //---------------------------------------------------------------------------
 

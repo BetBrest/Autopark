@@ -53,6 +53,8 @@ __published:	// IDE-managed Components
         TButton *Button5;
         TQuery *Query2;
         TLabel *Label3;
+        TFloatField *Query1Za1_chn;
+        TFloatField *Query1Ch_n;
         void __fastcall Button1Click(TObject *Sender);
         void __fastcall Button3Click(TObject *Sender);
         void __fastcall Button2Click(TObject *Sender);

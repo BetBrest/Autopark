@@ -96,6 +96,9 @@ __published:	// IDE-managed Components
         void __fastcall CheckBox5Click(TObject *Sender);
         void __fastcall SpeedButton1Click(TObject *Sender);
         void __fastcall SpeedButton2Click(TObject *Sender);
+        void __fastcall Edit11KeyPress(TObject *Sender, char &Key);
+        void __fastcall Edit12KeyDown(TObject *Sender, WORD &Key,
+          TShiftState Shift);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm7(TComponent* Owner);

@@ -599,6 +599,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
+         }
 
          Form7->Query3->Post();
 
@@ -717,6 +721,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
+         }
         Form7->Query3->Post();
 
 
@@ -815,6 +823,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
           if (Form7->CheckBox1->Checked==true)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
+         }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
          }
         Form7->Query3->Post();
 
@@ -1109,19 +1121,31 @@ void __fastcall TForm7::Edit7KeyPress(TObject *Sender, char &Key)
 
 
 
-
-
-
-
 void __fastcall TForm7::Edit8KeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-      if(Key == VK_RETURN )
-
+  if(Key == VK_RETURN )
+  {
+    Query2->Close();
+    Query2->SQL->Clear();
+    Query2->SQL->Add("select Zp_vyh from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+    Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
+    Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+    Query2->Open();
+    if(Query2->FieldByName("Zp_vyh")->AsFloat!=0 )
     {
-
-             Edit9->SetFocus();
-             }
+     Edit9->Text= FloatToStrF(Query2->FieldByName("Zp_vyh")->AsFloat,ffFixed,10,2);
+     Edit10->Text= FloatToStrF(Query2->FieldByName("Zp_vyh")->AsFloat * StrToFloat(Form7->Edit8->Text),ffFixed,10,2);
+     Button1->SetFocus();
+     }
+     else
+     {
+      Edit9-> Text="0";
+      Edit9->SetFocus();
+      Edit10->Text="0";
+     }
+     Query2->Close();
+  }
 }
 //---------------------------------------------------------------------------
 
@@ -1210,6 +1234,49 @@ void __fastcall TForm7::SpeedButton2Click(TObject *Sender)
     flag_hours_or_km=false;
     Form9->Visible=true;
     Form9->Edit1->Text="";
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm7::Edit11KeyPress(TObject *Sender, char &Key)
+{
+if(Key == VK_RETURN )
+  {
+   Query2->Close();
+   Query2->SQL->Clear();
+   Query2->SQL->Add("select Zp_night from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+   Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
+   Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+   Query2->Open();
+   if(Query2->FieldByName("Zp_night")->AsFloat!=0 )
+   {
+    Edit12->Text= FloatToStrF(Query2->FieldByName("Zp_night")->AsFloat,ffFixed,10,2);
+    Edit13->Text= FloatToStrF(Query2->FieldByName("Zp_night")->AsFloat * StrToFloat(Form7->Edit11->Text),ffFixed,10,2);
+    Button1->SetFocus();
+   }
+   else
+   {
+    Edit12-> Text="0";
+    Edit12->SetFocus();
+    Edit13->Text="0";
+   }
+
+   Query2->Close();
+  }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm7::Edit12KeyDown(TObject *Sender, WORD &Key,
+      TShiftState Shift)
+{
+ if(Key == VK_RETURN )
+      {
+       Edit13->Text=FloatToStrF(StrToFloat(Edit11->Text)*StrToFloat(Edit12->Text),ffFixed,10,2);
+        Button1->SetFocus();
+       }
 }
 //---------------------------------------------------------------------------
 

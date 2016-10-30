@@ -972,6 +972,7 @@ void __fastcall TForm7::CheckBox2Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -984,6 +985,7 @@ void __fastcall TForm7::CheckBox2Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
     Edit4->Clear();
     Edit5->Clear();
     Edit6->Clear();
@@ -1007,6 +1009,7 @@ void __fastcall TForm7::CheckBox3Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -1019,6 +1022,7 @@ void __fastcall TForm7::CheckBox3Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
 
     Edit4->Clear();
     Edit5->Clear();
@@ -1041,6 +1045,7 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit3->Visible=false;
     Edit5->Visible=false;
     Edit7->Visible=false;
+    Form7->SpeedButton1->Visible=false;
     Edit2->SetFocus();
     Edit6->Clear();
     Edit4->Clear();
@@ -1053,6 +1058,7 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit3->Visible=true;
     Edit5->Visible=true;
     Edit7->Visible=true;
+    Form7->SpeedButton1->Visible=true;
 
     Edit4->Clear();
     Edit5->Clear();
@@ -1103,19 +1109,31 @@ void __fastcall TForm7::Edit7KeyPress(TObject *Sender, char &Key)
 
 
 
-
-
-
-
 void __fastcall TForm7::Edit8KeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-      if(Key == VK_RETURN )
-
+  if(Key == VK_RETURN )
+  {
+    Query2->Close();
+    Query2->SQL->Clear();
+    Query2->SQL->Add("select Zp_vyh from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+    Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
+    Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+    Query2->Open();
+    if(Query2->FieldByName("Zp_vyh")->AsFloat!=0 )
     {
-
-             Edit9->SetFocus();
-             }
+     Edit9->Text= FloatToStrF(Query2->FieldByName("Zp_vyh")->AsFloat,ffFixed,10,2);
+     Edit10->Text= FloatToStrF(Query2->FieldByName("Zp_vyh")->AsFloat * StrToFloat(Form7->Edit8->Text),ffFixed,10,2);
+     Button1->SetFocus();
+     }
+     else
+     {
+      Edit9-> Text="0";
+      Edit9->SetFocus();
+      Edit10->Text="0";
+     }
+     Query2->Close();
+  }
 }
 //---------------------------------------------------------------------------
 
@@ -1192,14 +1210,61 @@ void __fastcall TForm7::CheckBox5Click(TObject *Sender)
 
 void __fastcall TForm7::SpeedButton1Click(TObject *Sender)
 {
+      flag_hours_or_km=true;
       Form9->Visible=true;
+      Form9->Edit1->Text="";
 
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm7::SpeedButton2Click(TObject *Sender)
 {
+    flag_hours_or_km=false;
     Form9->Visible=true;
+    Form9->Edit1->Text="";
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm7::Edit11KeyPress(TObject *Sender, char &Key)
+{
+if(Key == VK_RETURN )
+  {
+   Query2->Close();
+   Query2->SQL->Clear();
+   Query2->SQL->Add("select Zp_night from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+   Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
+   Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
+   Query2->Open();
+   if(Query2->FieldByName("Zp_night")->AsFloat!=0 )
+   {
+    Edit12->Text= FloatToStrF(Query2->FieldByName("Zp_night")->AsFloat,ffFixed,10,2);
+    Edit13->Text= FloatToStrF(Query2->FieldByName("Zp_night")->AsFloat * StrToFloat(Form7->Edit11->Text),ffFixed,10,2);
+    Button1->SetFocus();
+   }
+   else
+   {
+    Edit12-> Text="0";
+    Edit12->SetFocus();
+    Edit13->Text="0";
+   }
+
+   Query2->Close();
+  }
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm7::Edit12KeyDown(TObject *Sender, WORD &Key,
+      TShiftState Shift)
+{
+ if(Key == VK_RETURN )
+      {
+       Edit13->Text=FloatToStrF(StrToFloat(Edit11->Text)*StrToFloat(Edit12->Text),ffFixed,10,2);
+        Button1->SetFocus();
+       }
 }
 //---------------------------------------------------------------------------
 

@@ -188,7 +188,7 @@ object Form7: TForm7
     Visible = False
   end
   object Label15: TLabel
-    Left = 521
+    Left = 497
     Top = 516
     Width = 133
     Height = 24
@@ -235,7 +235,7 @@ object Form7: TForm7
     Top = 17
     Width = 256
     Height = 275
-    Date = 40314.8406603125
+    Date = 40314.6410355093
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
@@ -427,6 +427,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 12
+    Text = '0'
   end
   object Edit5: TEdit
     Left = 681
@@ -440,6 +441,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 13
+    Text = '0'
   end
   object Edit6: TEdit
     Left = 494
@@ -453,6 +455,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 14
+    Text = '0'
     OnKeyPress = Edit6KeyPress
   end
   object Edit7: TEdit
@@ -467,6 +470,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 15
+    Text = '0'
     OnKeyPress = Edit7KeyPress
   end
   object Edit8: TEdit
@@ -481,6 +485,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 16
+    Text = '0'
     Visible = False
     OnKeyDown = Edit8KeyDown
   end
@@ -511,6 +516,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 18
+    Text = '0'
     Visible = False
     OnKeyDown = Edit9KeyDown
   end
@@ -571,6 +577,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 22
+    Text = '0'
     Visible = False
   end
   object ComboBox8: TComboBox
@@ -606,8 +613,9 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 24
+    Text = '0'
     Visible = False
-    OnKeyDown = Edit8KeyDown
+    OnKeyPress = Edit11KeyPress
   end
   object Edit12: TEdit
     Left = 492
@@ -621,8 +629,9 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 25
+    Text = '0'
     Visible = False
-    OnKeyDown = Edit9KeyDown
+    OnKeyDown = Edit12KeyDown
   end
   object Edit13: TEdit
     Left = 682
@@ -636,6 +645,7 @@ object Form7: TForm7
     Font.Style = []
     ParentFont = False
     TabOrder = 26
+    Text = '0'
     Visible = False
   end
   object CheckBox5: TCheckBox

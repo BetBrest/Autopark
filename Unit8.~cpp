@@ -812,7 +812,7 @@ float cost_chas=0;// считаем часы и тарифы
 AnsiString Vyhodnoy[100];  // строка с выходными днями
 int count_vyh=0;
 AnsiString Night[100];  // строка с ночными
-int count_nigth=0;
+int count_night=0;
 
 Form8->Memo1->Clear();
 if (Form8->MonthCalendar1->Date > Form8->MonthCalendar2->Date)
@@ -923,7 +923,7 @@ while ( !Query2->Eof)
    }
   }
   s1_v+=s1_m + s2_m + cc*ch +sv+sn;    // ЕСЛИ МАШИНА ДРУГАЯ
-  s1_m=s2_m=cc=ch=chn=ccnchas=cost_chas=sv=sn=0;
+  s1_m=s2_m=cc=ch=chn=ccn=chas=cost_chas=sv=sn=0;
   f3= Query2->FieldByName("Marka")->AsString;
   f4= Query2->FieldByName("Govnumber")->AsString;
   f5= Query2->FieldByName("Pricep")->AsString ;
@@ -986,10 +986,13 @@ float s1_m=0,s2_m=0; // ЦЕНА ЗА МАШИНУ
 float sv=0; // сумма за выходные дни
 float ch=0;    // часы ЗА вых  дни.
 float cc=0; // ЦЕНА ЗА вых  дни.
+float sn=0; // сумма за выходные дни
+float chn=0;    // часы ЗА вых  дни.
+float ccn=0; // ЦЕНА ЗА вых  дни.
 float chas=0,km=0;
 int n=1; // номер п/п
 int vid_izm; /// Наимнование (т,км,ч,м/ч)
-float dif_cc=0;
+float dif_cc=0,dif_ccn=0;
 float sum_tkm=0,sum_t=0,sum_mch=0;
 float col_tkm=0,col_t=0,col_mch=0;
 
@@ -1002,7 +1005,7 @@ if (Form8->MonthCalendar1->Date > Form8->MonthCalendar2->Date)
 }
 
 
- Query1->Close();
+Query1->Close();
 Memo1->Lines->Add("Отчет с " + DateToStr(Form8->MonthCalendar1->Date ) + " по " + DateToStr(Form8->MonthCalendar2->Date )+":") ;
 Memo1->Lines->Add("Реестр");
 Query1->ParamByName("p1")->AsDate =Form8->MonthCalendar1->Date;
@@ -1010,400 +1013,299 @@ Query1->ParamByName("p2")->AsDate =Form8->MonthCalendar2->Date;
 Query1->Open();
 
 if   ( Query1->Eof)
-{  ShowMessage ("Нет ни одной записи!");
-
-return;
-
+{
+ ShowMessage ("Нет ни одной записи!");
+ return;
 }
 
-
-
-  AnsiString     f1,f2,f3,f4,f5;
- // int f6,f7;   // тарифы  за час/ за км
-  BOOL           vidtr;
-
-                      f1= Query1->FieldByName("District")->AsString;
-                      f2= Query1->FieldByName("Object")->AsString ;
-                      vidtr=Query1->FieldByName("Vidtr")->AsBoolean;
-                      f3= Query1->FieldByName("Marka")->AsString;
-                      f4= Query1->FieldByName("Govnumber")->AsString;
-                      f5= Query1->FieldByName("Pricep")->AsString ;
-                       cc= Query1->FieldByName("Za1_Chv")->AsFloat;
-
-
-                       Memo1->Lines->Add( IntToStr(n)+ ". \t" + f1 + " в том числе, ");
-                        n++;
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         while ( !Query1->Eof)
-
-           {
-
-           if (f1== Query1->FieldByName("District")->AsString  )
-             {
-               if (f2== Query1->FieldByName("Object")->AsString  )
-                  {
-                     if (vidtr == Query1->FieldByName("Vidtr")->AsBoolean  )
-                       {
-                       // считаем для вида транспорта
-                       if (f3== Query1->FieldByName("Marka")->AsString && f4==Query1->FieldByName("Govnumber")->AsString && f5== Query1->FieldByName("Pricep")->AsString )
-                        {
-                           vid_izm=  Query1->FieldByName("Vid_izm")->AsInteger;
-                            dif_cc=Query1->FieldByName("Za1_Chv")->AsFloat;
-                           if ( cc!= dif_cc)      // если   другой тариф в выхлдные дни вывод старых данных и сброс счетчиков
-                          {
-                             if ((cc*ch)!=0)    // вывод вых дней
-                               {
-                                sv=sv+cc*ch;
-                                ch=0;
-
-                               }
-
-
-                          }
-
-                          if(vid_izm==1)
-                         { s1_m= s1_m + Query1->FieldByName("Cost1")->AsFloat;   //км
-                          s2_m= s2_m + Query1->FieldByName("Cost2")->AsFloat;    //часы
-                          chas=chas+Query1->FieldByName("Ch")->AsFloat;
-                          km=km+Query1->FieldByName("Km")->AsFloat;
-
-                          }
-                          if(vid_izm==2)
-                         { sum_tkm= sum_tkm + Query1->FieldByName("Cost1")->AsFloat;   //км
-                           col_tkm=col_tkm + Query1->FieldByName("Km")->AsFloat;
-                      //     ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
-
-                          }
-                           if(vid_izm==3)
-                         { sum_t= sum_t + Query1->FieldByName("Cost1")->AsFloat;   //км
-                           col_t=col_t + Query1->FieldByName("Km")->AsFloat;
-                     //      ed_t = Query1->FieldByName("Za1_km")->AsInteger;
-
-                          }
-                           if(vid_izm==4)
-                         { sum_mch= sum_mch + Query1->FieldByName("Cost1")->AsFloat;   //км
-                           col_mch=col_mch + Query1->FieldByName("Km")->AsFloat;
-                        //   ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
-
-                          }
-
-
-                          if(Query1->FieldByName("Ch_v")->AsFloat!=0)
-                          {ch= ch+Query1->FieldByName("Ch_v")->AsFloat;
-                          cc= Query1->FieldByName("Za1_Chv")->AsFloat;
-                           }
-
-
-                        }
-                        else
-                        {      /// вывыод информации о транспорте
-                            //  n= printcar( n , vidtr , vid_izm, f1,f2,f3,f4, f5, f6, f7, cc, ch, km, chas, s1_m, s2_m,sum_mch,sum_tkm,sum_t,ed_mch,ed_t,ed_tkm,col_mch,col_t,col_tkm)   ;
-
-                             s1_v+=s1_m + s2_m  + cc*ch + sum_tkm + sum_t + sum_mch+sv;    // ЕСЛИ МАШИНА ДРУГАЯ
-                             s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
-
-
-
-                              //s1_ob+=s1_v;    // ЕСЛИ транспорт другой
-                             // s1_v=0;
-
-                             f3= Query1->FieldByName("Marka")->AsString;
-                             f4= Query1->FieldByName("Govnumber")->AsString;
-                             f5= Query1->FieldByName("Pricep")->AsString ;
-
-
-                             chas=Query1->FieldByName("Ch")->AsFloat;
-                             km=Query1->FieldByName("Km")->AsFloat;
-                             vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
-
-
-
-
-                            // s1_m=  Query1->FieldByName("Cost1")->AsInteger;
-                           //  s2_m=  Query1->FieldByName("Cost2")->AsInteger;
-                              ch=Query1->FieldByName("Ch_v")->AsFloat;
-                              cc=Query1->FieldByName("Za1_Chv")->AsFloat;
-
-                                 if(vid_izm==1)
-                              {
-                                s1_m=  Query1->FieldByName("Cost1")->AsFloat;
-                                s2_m=  Query1->FieldByName("Cost2")->AsFloat;
-
-                              }
-
-
-                              if(vid_izm==2)
-                              {
-                                sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
-                                col_tkm= Query1->FieldByName("Km")->AsFloat;
-                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
-                              }
-                               if(vid_izm==3)
-                                { sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_t= Query1->FieldByName("Km")->AsFloat;
-                                //  ed_t = Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-                                if(vid_izm==4)
-                                { sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_mch= Query1->FieldByName("Km")->AsFloat;
-                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-
-
-                         }
-
-
-                     }
-                     else
-                     {
-                                  /// вывыод информации о транспорте
-                          //   n= printcar( n , vidtr , vid_izm, f1,f2,f3,f4, f5, f6, f7, cc, ch, km, chas, s1_m, s2_m,sum_mch,sum_tkm,sum_t,ed_mch,ed_t,ed_tkm,col_mch,col_t,col_tkm)   ;
-
-                              s1_v+=s1_m + s2_m + cc*ch + sum_tkm + sum_t + sum_mch+sv;    // ЕСЛИ МАШИНА ДРУГАЯ
-                             s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
-
-
-
-                              s1_ob+=s1_v;    // ЕСЛИ транспорт другой
-                              s1_v=0;
-
-
-                        vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
-
-
-
-
-                             f3= Query1->FieldByName("Marka")->AsString;
-                             f4= Query1->FieldByName("Govnumber")->AsString;
-                             f5= Query1->FieldByName("Pricep")->AsString ;
-
-                             chas=Query1->FieldByName("Ch")->AsFloat;
-                             km=Query1->FieldByName("Km")->AsFloat;
-                             vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
-
-
-                           //  s1_m=  Query1->FieldByName("Cost1")->AsInteger;
-                            // s2_m=  Query1->FieldByName("Cost2")->AsInteger;
-                             ch=Query1->FieldByName("Ch_v")->AsFloat;
-                             cc=Query1->FieldByName("Za1_Chv")->AsFloat;
-
-                                  if(vid_izm==1)
-                              {
-                                s1_m=  Query1->FieldByName("Cost1")->AsFloat;
-                                s2_m=  Query1->FieldByName("Cost2")->AsFloat;
-
-                              }
-
-
-                              if(vid_izm==2)
-                              {
-                                sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
-                                col_tkm= Query1->FieldByName("Km")->AsFloat;
-                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
-                              }
-                               if(vid_izm==3)
-                                { sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_t= Query1->FieldByName("Km")->AsFloat;
-                              //    ed_t = Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-                                if(vid_izm==4)
-                                { sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_mch= Query1->FieldByName("Km")->AsFloat;
-                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-                     }
-
-                   }
-
-                  else
-                  {       /// вывыод информации о транспорте
-                         //     n= printcar( n , vidtr , vid_izm, f1,f2,f3,f4, f5, f6, f7, cc, ch, km, chas, s1_m, s2_m,sum_mch,sum_tkm,sum_t,ed_mch,ed_t,ed_tkm,col_mch,col_t,col_tkm)   ;
-
-                             s1_v+=s1_m + s2_m + cc*ch + sum_tkm + sum_t + sum_mch+sv;    // ЕСЛИ МАШИНА ДРУГАЯ
-                             s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
-
-
-
-                              s1_ob+=s1_v;    // ЕСЛИ транспорт другой
-                              s1_v=0;
-
-                               Memo1->Lines->Add( "\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2) );
-                             //  Memo1->Lines->Add("");
-                              s1_r+=s1_ob;    // ЕСЛИ объект другой
-                              s1_ob=0;
-
-
-
-
-                     f2=  Query1->FieldByName("Object")->AsString;
-                      vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
-
-                             f3= Query1->FieldByName("Marka")->AsString;
-                             f4= Query1->FieldByName("Govnumber")->AsString;
-                             f5= Query1->FieldByName("Pricep")->AsString ;
-
-                             //f8=Query1->FieldByName("Ch")->AsInteger;
-                             //f9=Query1->FieldByName("Km")->AsInteger;
-                             chas=Query1->FieldByName("Ch")->AsFloat;
-                             km=Query1->FieldByName("Km")->AsFloat;
-                             vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
-
-                           //  s1_m=  Query1->FieldByName("Cost1")->AsInteger;
-                           //  s2_m=  Query1->FieldByName("Cost2")->AsInteger;
-                              ch=Query1->FieldByName("Ch_v")->AsFloat;
-                              cc=Query1->FieldByName("Za1_Chv")->AsFloat;
-
-                                    if(vid_izm==1)
-                              {
-                                s1_m=  Query1->FieldByName("Cost1")->AsFloat;
-                                s2_m=  Query1->FieldByName("Cost2")->AsFloat;
-
-                              }
-
-                               if(vid_izm==2)
-                              {
-                                sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
-                                col_tkm= Query1->FieldByName("Km")->AsFloat;
-                             //   ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
-                              }
-                               if(vid_izm==3)
-                                { sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_t= Query1->FieldByName("Km")->AsFloat;
-                             //     ed_t = Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-                                if(vid_izm==4)
-                                { sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_mch= Query1->FieldByName("Km")->AsFloat;
-                                //  ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-
-
-                  }
-
-
-             }
-             else
-             {         /// вывыод информации о транспорте
-                       //     n= printcar( n , vidtr, vid_izm, f1,f2,f3,f4, f5, f6, f7, cc, ch, km, chas, s1_m, s2_m,sum_mch,sum_tkm,sum_t,ed_mch,ed_t,ed_tkm,col_mch,col_t,col_tkm)   ;
-
-
-                            s1_v+=s1_m + s2_m + cc*ch + sum_tkm + sum_t + sum_mch+sv;    // ЕСЛИ МАШИНА ДРУГАЯ
-                             s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
-
-
-
-
-                              s1_ob+=s1_v;    // ЕСЛИ транспорт другой
-                              s1_v=0;
-
-                                  Memo1->Lines->Add( "\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2)  );
-                            //    Memo1->Lines->Add("");
-                               s1_r+=s1_ob;    // ЕСЛИ объект другой
-                              s1_ob=0;
-
-                              Memo1->Lines->Add("");
-                              Memo1->Lines->Add( "\t Итого: \t\t\t\t\t"+ FloatToStrF(s1_r,ffFixed,12,2) );
-                               Memo1->Lines->Add("");
-                              s1_all+=s1_r;    // ЕСЛИ раен другой
-                              s1_r=0;
-
-                 //выыод новой инфы
-
-              //  Memo1->Lines->Add(Query1->FieldByName("District")->AsString);
-                  Memo1->Lines->Add( IntToStr(n)+ ". \t" + Query1->FieldByName("District")->AsString + " в том числе, ");
-                  n++;
-
-
-                f1=  Query1->FieldByName("District")->AsString;
-                f2=  Query1->FieldByName("Object")->AsString;
-                vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
-
-
-
-                             f3= Query1->FieldByName("Marka")->AsString;
-                             f4= Query1->FieldByName("Govnumber")->AsString;
-                             f5= Query1->FieldByName("Pricep")->AsString ;
-
-                             chas=Query1->FieldByName("Ch")->AsFloat;
-                             km=Query1->FieldByName("Km")->AsFloat;
-                             //f8=Query1->FieldByName("Ch")->AsInteger;
-                             //f9=Query1->FieldByName("Km")->AsInteger;
-                             vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
-
-                               if(vid_izm==1)
-                              {
-                               s1_m=  Query1->FieldByName("Cost1")->AsFloat;
-                               s2_m=  Query1->FieldByName("Cost2")->AsFloat;
-                              }
-                              ch=Query1->FieldByName("Ch_v")->AsFloat;
-                              cc=Query1->FieldByName("Za1_Chv")->AsFloat;
-
-
-                               if(vid_izm==2)
-                              {
-                                sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
-                                col_tkm= Query1->FieldByName("Km")->AsFloat;
-                              //  ed_tkm = Query1->FieldByName("Za1_km")->AsInteger;
-                              }
-                               if(vid_izm==3)
-                                { sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_t= Query1->FieldByName("Km")->AsFloat;
-                              //    ed_t = Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-                                if(vid_izm==4)
-                                { sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
-                                  col_mch= Query1->FieldByName("Km")->AsFloat;
-                               //   ed_mch =  Query1->FieldByName("Za1_km")->AsInteger;
-                                }
-
-
-             }
-              Query1->Next();
-           }
-
-
-              // если раон последн выводим инфу
-               {
-                      /// вывыод информации о транспорте
-                  //  n= printcar( n , vidtr , vid_izm, f1,f2,f3,f4, f5, f6, f7, cc, ch, km, chas, s1_m, s2_m,sum_mch,sum_tkm,sum_t,ed_mch,ed_t,ed_tkm,col_mch,col_t,col_tkm)   ;
-
-                           //  s1_v+=s1_m + s2_m + cc*ch;    // ЕСЛИ МАШИНА ДРУГАЯ
-                          //   s1_m=s2_m=cc=ch=chas=km=0;
-
-                             s1_v+=s1_m + s2_m + cc*ch + sum_tkm + sum_t + sum_mch;    // ЕСЛИ МАШИНА ДРУГАЯ
-                             s1_m=s2_m=cc=ch=chas=km=0;
-                             sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=0;
-
-                              n=1;
-                              s1_ob+=s1_v;    // ЕСЛИ транспорт другой
-                              s1_v=0;
-
-                                  Memo1->Lines->Add("\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2) );
-                             // Memo1->Lines->Add("");
-                              s1_r+=s1_ob;    // ЕСЛИ объект другой
-                              s1_ob=0;
-
-                              Memo1->Lines->Add( "\t Итого: \t\t\t\t\t "+ FloatToStrF(s1_r,ffFixed,12,2) );
-                                Memo1->Lines->Add("");
-                              s1_all+=s1_r;    // ЕСЛИ раен другой
-                              s1_r=0;
-               }
-
-
-
-            Memo1->Lines->Add("");
-            Memo1->Lines->Add("\t Всего: \t\t\t\t\t " + FloatToStrF(s1_all,ffFixed,12,2));
-            Memo1->Lines->Add("");
-
-            Query1->Close();
-
-
+AnsiString     f1,f2,f3,f4,f5;
+// int f6,f7;   // тарифы  за час/ за км
+BOOL           vidtr;
+
+f1= Query1->FieldByName("District")->AsString;
+f2= Query1->FieldByName("Object")->AsString ;
+vidtr=Query1->FieldByName("Vidtr")->AsBoolean;
+f3= Query1->FieldByName("Marka")->AsString;
+f4= Query1->FieldByName("Govnumber")->AsString;
+f5= Query1->FieldByName("Pricep")->AsString ;
+cc= Query1->FieldByName("Za1_Chv")->AsFloat;
+ccn= Query1->FieldByName("Za1_Chn")->AsFloat;
+
+Memo1->Lines->Add( IntToStr(n)+ ". \t" + f1 + " в том числе, ");
+n++;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+while ( !Query1->Eof)
+{
+ if (f1== Query1->FieldByName("District")->AsString  )
+ {
+  if (f2== Query1->FieldByName("Object")->AsString  )
+  {
+   if (vidtr == Query1->FieldByName("Vidtr")->AsBoolean  )
+   { // считаем для вида транспорта
+    if (f3== Query1->FieldByName("Marka")->AsString && f4==Query1->FieldByName("Govnumber")->AsString && f5== Query1->FieldByName("Pricep")->AsString )
+    {
+     vid_izm=  Query1->FieldByName("Vid_izm")->AsInteger;
+     dif_cc=Query1->FieldByName("Za1_Chv")->AsFloat;
+     if ( cc!= dif_cc)      // если   другой тариф в выхлдные дни вывод старых данных и сброс счетчиков
+     {
+      if ((cc*ch)!=0)    // вывод вых дней
+      {
+       sv=sv+cc*ch;
+       ch=0;
+      }
+     }
+     dif_ccn=Query1->FieldByName("Za1_Chn")->AsFloat;
+     if ( ccn!= dif_ccn)      // если   другой тариф в выхлдные дни вывод старых данных и сброс счетчиков
+     {
+      if ((ccn*chn)!=0)    // вывод вых дней
+      {
+       sn=sn+ccn*chn;
+       chn=0;
+      }
+     }
+     if(vid_izm==1)
+     {
+      s1_m= s1_m + Query1->FieldByName("Cost1")->AsFloat;   //км
+      s2_m= s2_m + Query1->FieldByName("Cost2")->AsFloat;    //часы
+      chas=chas+Query1->FieldByName("Ch")->AsFloat;
+      km=km+Query1->FieldByName("Km")->AsFloat;
+     }
+     if(vid_izm==2)
+     {
+      sum_tkm= sum_tkm + Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_tkm=col_tkm + Query1->FieldByName("Km")->AsFloat;
+     }
+     if(vid_izm==3)
+     {
+      sum_t= sum_t + Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_t=col_t + Query1->FieldByName("Km")->AsFloat;
+     }
+     if(vid_izm==4)
+     {
+      sum_mch= sum_mch + Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_mch=col_mch + Query1->FieldByName("Km")->AsFloat;
+     }
+     if(Query1->FieldByName("Ch_v")->AsFloat!=0)
+     {
+      ch= ch+Query1->FieldByName("Ch_v")->AsFloat;
+      cc= Query1->FieldByName("Za1_Chv")->AsFloat;
+     }
+     if(Query1->FieldByName("Ch_n")->AsFloat!=0)
+     {
+      chn= ch+Query1->FieldByName("Ch_n")->AsFloat;
+      ccn= Query1->FieldByName("Za1_Chn")->AsFloat;
+     }
+    }
+    else
+    { // вывыод информации о транспорте
+     s1_v+=s1_m + s2_m  + cc*ch + ccn*chn + sum_tkm + sum_t + sum_mch+sv+sn;    // ЕСЛИ МАШИНА ДРУГАЯ
+     s1_m=s2_m=cc=ch=ccn=chn=chas=km=0;
+     sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=sn=0;
+     //s1_ob+=s1_v;    // ЕСЛИ транспорт другой
+     // s1_v=0;
+     f3= Query1->FieldByName("Marka")->AsString;
+     f4= Query1->FieldByName("Govnumber")->AsString;
+     f5= Query1->FieldByName("Pricep")->AsString ;
+     chas=Query1->FieldByName("Ch")->AsFloat;
+     km=Query1->FieldByName("Km")->AsFloat;
+     vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
+     ch=Query1->FieldByName("Ch_v")->AsFloat;
+     cc=Query1->FieldByName("Za1_Chv")->AsFloat;
+     chn=Query1->FieldByName("Ch_n")->AsFloat;
+     ccn=Query1->FieldByName("Za1_Chn")->AsFloat;
+     if(vid_izm==1)
+     {
+      s1_m=  Query1->FieldByName("Cost1")->AsFloat;
+      s2_m=  Query1->FieldByName("Cost2")->AsFloat;
+     }
+     if(vid_izm==2)
+     {
+      sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_tkm= Query1->FieldByName("Km")->AsFloat;
+     }
+     if(vid_izm==3)
+     {
+      sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_t= Query1->FieldByName("Km")->AsFloat;
+     }
+     if(vid_izm==4)
+     {
+      sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
+      col_mch= Query1->FieldByName("Km")->AsFloat;
+     }
+    }
+   }
+   else
+   { // вывыод информации о транспорте
+    s1_v+=s1_m + s2_m + cc*ch + ccn*chn + sum_tkm + sum_t + sum_mch+sv+sn;    // ЕСЛИ МАШИНА ДРУГАЯ
+    s1_m=s2_m=cc=ch=ccn=chn=chas=km=0;
+    sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=sn=0;
+
+    s1_ob+=s1_v;    // ЕСЛИ транспорт другой
+    s1_v=0;
+    vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
+    f3= Query1->FieldByName("Marka")->AsString;
+    f4= Query1->FieldByName("Govnumber")->AsString;
+    f5= Query1->FieldByName("Pricep")->AsString ;
+    chas=Query1->FieldByName("Ch")->AsFloat;
+    km=Query1->FieldByName("Km")->AsFloat;
+    vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
+    ch=Query1->FieldByName("Ch_v")->AsFloat;
+    cc=Query1->FieldByName("Za1_Chv")->AsFloat;
+    chn=Query1->FieldByName("Ch_n")->AsFloat;
+    ccn=Query1->FieldByName("Za1_Chn")->AsFloat;
+    if(vid_izm==1)
+    {
+     s1_m=  Query1->FieldByName("Cost1")->AsFloat;
+     s2_m=  Query1->FieldByName("Cost2")->AsFloat;
+    }
+    if(vid_izm==2)
+    {
+     sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
+     col_tkm= Query1->FieldByName("Km")->AsFloat;
+    }
+    if(vid_izm==3)
+    {
+     sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
+     col_t= Query1->FieldByName("Km")->AsFloat;
+    }
+    if(vid_izm==4)
+    {
+     sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
+     col_mch= Query1->FieldByName("Km")->AsFloat;
+    }
+   }
+  }
+  else
+  { // вывод информации о транспорте
+   s1_v+=s1_m + s2_m + cc*ch + ccn*chn + sum_tkm + sum_t + sum_mch+sv+sn;    // ЕСЛИ МАШИНА ДРУГАЯ
+   s1_m=s2_m=cc=ch=ccn=chn=chas=km=0;
+   sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=sn=0;
+   s1_ob+=s1_v;    // ЕСЛИ транспорт другой
+   s1_v=0;
+   Memo1->Lines->Add( "\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2) );
+   //  Memo1->Lines->Add("");
+   s1_r+=s1_ob;    // ЕСЛИ объект другой
+   s1_ob=0;
+   f2=  Query1->FieldByName("Object")->AsString;
+   vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
+   f3= Query1->FieldByName("Marka")->AsString;
+   f4= Query1->FieldByName("Govnumber")->AsString;
+   f5= Query1->FieldByName("Pricep")->AsString ;
+   chas=Query1->FieldByName("Ch")->AsFloat;
+   km=Query1->FieldByName("Km")->AsFloat;
+   vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
+   ch=Query1->FieldByName("Ch_v")->AsFloat;
+   cc=Query1->FieldByName("Za1_Chv")->AsFloat;
+   chn=Query1->FieldByName("Ch_n")->AsFloat;
+   ccn=Query1->FieldByName("Za1_Chn")->AsFloat;
+   if(vid_izm==1)
+   {
+    s1_m=  Query1->FieldByName("Cost1")->AsFloat;
+    s2_m=  Query1->FieldByName("Cost2")->AsFloat;
+   }
+   if(vid_izm==2)
+   {
+    sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
+    col_tkm= Query1->FieldByName("Km")->AsFloat;
+   }
+   if(vid_izm==3)
+   {
+    sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
+    col_t= Query1->FieldByName("Km")->AsFloat;
+   }
+   if(vid_izm==4)
+   {
+    sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
+    col_mch= Query1->FieldByName("Km")->AsFloat;
+   }
+  }
+ }
+ else
+ {         /// вывыод информации о транспорте
+  s1_v+=s1_m + s2_m + cc*ch + ccn*chn + sum_tkm + sum_t + sum_mch+sv+sn;    // ЕСЛИ МАШИНА ДРУГАЯ
+  s1_m=s2_m=cc=ch=ccn=chn=chas=km=0;
+  sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=sn=0;
+  s1_ob+=s1_v;    // ЕСЛИ транспорт другой
+  s1_v=0;
+  Memo1->Lines->Add( "\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2)  );
+  //    Memo1->Lines->Add("");
+  s1_r+=s1_ob;    // ЕСЛИ объект другой
+  s1_ob=0;
+  Memo1->Lines->Add("");
+  Memo1->Lines->Add( "\t Итого: \t\t\t\t\t"+ FloatToStrF(s1_r,ffFixed,12,2) );
+  Memo1->Lines->Add("");
+  s1_all+=s1_r;    // ЕСЛИ раен другой
+  s1_r=0;
+  //выыод новой инфы
+
+  //  Memo1->Lines->Add(Query1->FieldByName("District")->AsString);
+  Memo1->Lines->Add( IntToStr(n)+ ". \t" + Query1->FieldByName("District")->AsString + " в том числе, ");
+  n++;
+
+
+  f1=  Query1->FieldByName("District")->AsString;
+  f2=  Query1->FieldByName("Object")->AsString;
+  vidtr= Query1->FieldByName("Vidtr")->AsBoolean;
+  f3= Query1->FieldByName("Marka")->AsString;
+  f4= Query1->FieldByName("Govnumber")->AsString;
+  f5= Query1->FieldByName("Pricep")->AsString ;
+  chas=Query1->FieldByName("Ch")->AsFloat;
+  km=Query1->FieldByName("Km")->AsFloat;
+  vid_izm=Query1->FieldByName("Vid_izm")->AsInteger;
+  if(vid_izm==1)
+  {
+   s1_m=  Query1->FieldByName("Cost1")->AsFloat;
+   s2_m=  Query1->FieldByName("Cost2")->AsFloat;
+  }
+  ch=Query1->FieldByName("Ch_v")->AsFloat;
+  cc=Query1->FieldByName("Za1_Chv")->AsFloat;
+  chn=Query1->FieldByName("Ch_n")->AsFloat;
+  ccn=Query1->FieldByName("Za1_Chn")->AsFloat;
+
+  if(vid_izm==2)
+  {
+  sum_tkm=  Query1->FieldByName("Cost1")->AsFloat;   //км
+  col_tkm= Query1->FieldByName("Km")->AsFloat;
+  }
+  if(vid_izm==3)
+  {
+   sum_t= Query1->FieldByName("Cost1")->AsFloat;   //км
+   col_t= Query1->FieldByName("Km")->AsFloat;
+  }
+  if(vid_izm==4)
+  {
+   sum_mch= Query1->FieldByName("Cost1")->AsFloat;   //км
+   col_mch= Query1->FieldByName("Km")->AsFloat;
+  }
+ }
+ Query1->Next();
+}
+
+// если раон последн выводим инфу
+{
+ // вывыод информации о транспорте
+ s1_v+=s1_m + s2_m + cc*ch + ccn*chn + sum_tkm + sum_t + sum_mch;    // ЕСЛИ МАШИНА ДРУГАЯ
+ s1_m=s2_m=cc=ch=chn=ccn=chas=km=0;
+ sum_mch=sum_tkm=sum_t=col_mch=col_t=col_tkm=sv=sn=0;
+ n=1;
+ s1_ob+=s1_v;    // ЕСЛИ транспорт другой
+ s1_v=0;
+ Memo1->Lines->Add("\t" + f2 + "\t\t\t\t\t "+ FloatToStrF(s1_ob,ffFixed,12,2) );
+ // Memo1->Lines->Add("");
+ s1_r+=s1_ob;    // ЕСЛИ объект другой
+ s1_ob=0;
+ Memo1->Lines->Add( "\t Итого: \t\t\t\t\t "+ FloatToStrF(s1_r,ffFixed,12,2) );
+ Memo1->Lines->Add("");
+ s1_all+=s1_r;    // ЕСЛИ раен другой
+ s1_r=0;
+}
+
+Memo1->Lines->Add("");
+Memo1->Lines->Add("\t Всего: \t\t\t\t\t " + FloatToStrF(s1_all,ffFixed,12,2));
+Memo1->Lines->Add("");
+Query1->Close();
 }
 //---------------------------------------------------------------------------
 

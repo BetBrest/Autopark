@@ -599,6 +599,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
+         }
 
          Form7->Query3->Post();
 
@@ -717,6 +721,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
          }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
+         }
         Form7->Query3->Post();
 
 
@@ -815,6 +823,10 @@ void __fastcall TForm7::Button1Click(TObject *Sender)
           if (Form7->CheckBox1->Checked==true)
          { Form7->Query3->FieldByName("Ch_v")->AsFloat = StrToFloat(Form7->Edit8->Text);
            Form7->Query3->FieldByName("Za1_chv")->AsFloat =  StrToFloat(Form7->Edit9->Text);
+         }
+          if (Form7->CheckBox5->Checked==true)
+         { Form7->Query3->FieldByName("Ch_n")->AsFloat = StrToFloat(Form7->Edit11->Text);
+           Form7->Query3->FieldByName("Za1_chn")->AsFloat =  StrToFloat(Form7->Edit12->Text);
          }
         Form7->Query3->Post();
 

@@ -1058,9 +1058,13 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit5->Visible=false;
     Edit7->Visible=false;
     Form7->SpeedButton1->Visible=false;
-    Edit2->SetFocus();
-    Edit6->Clear();
-    Edit4->Clear();
+    Edit6->Text="0";
+    Edit4->Text="0";
+    Label16->Visible=true;
+    ComboBox9->Visible=true;
+    //Edit2->SetFocus();
+    ComboBox9->SetFocus();
+
  }
  else
  {
@@ -1072,10 +1076,12 @@ void __fastcall TForm7::CheckBox4Click(TObject *Sender)
     Edit7->Visible=true;
     Form7->SpeedButton1->Visible=true;
 
-    Edit4->Clear();
-    Edit5->Clear();
-    Edit6->Clear();
-    Edit7->Clear();
+    Edit4->Text="0";
+    Edit5->Text="0";
+    Edit6->Text="0";
+    Edit7->Text="0";
+    Label16->Visible=false;
+    ComboBox9->Visible=false;
     Edit2->SetFocus();
 
  }
@@ -1279,4 +1285,22 @@ void __fastcall TForm7::Edit12KeyDown(TObject *Sender, WORD &Key,
        }
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TForm7::ComboBox9KeyPress(TObject *Sender, char &Key)
+{
+ if(Key == VK_RETURN )
+ {
+  if ( ComboBox9->Text=="5%" || ComboBox9->Text=="0%"  || ComboBox9->Text=="10%")
+  {
+   Form7-> Edit2->SetFocus();
+  }
+  else
+  {
+   ShowMessage("Выбирите одно из значений!!!");
+   ComboBox9->SetFocus();
+  }
+ }
+}
+//---------------------------------------------------------------------------
+
 

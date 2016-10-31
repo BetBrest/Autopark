@@ -68,6 +68,8 @@ __published:	// IDE-managed Components
         TCheckBox *CheckBox5;
         TSpeedButton *SpeedButton1;
         TSpeedButton *SpeedButton2;
+        TLabel *Label16;
+        TComboBox *ComboBox9;
         void __fastcall MonthCalendar1Click(TObject *Sender);
         void __fastcall ComboBox1KeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
@@ -99,6 +101,7 @@ __published:	// IDE-managed Components
         void __fastcall Edit11KeyPress(TObject *Sender, char &Key);
         void __fastcall Edit12KeyDown(TObject *Sender, WORD &Key,
           TShiftState Shift);
+        void __fastcall ComboBox9KeyPress(TObject *Sender, char &Key);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm7(TComponent* Owner);

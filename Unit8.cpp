@@ -1093,7 +1093,7 @@ while ( !Query1->Eof)
      }
      if(Query1->FieldByName("Ch_n")->AsFloat!=0)
      {
-      chn= ch+Query1->FieldByName("Ch_n")->AsFloat;
+      chn= chn+Query1->FieldByName("Ch_n")->AsFloat;
       ccn= Query1->FieldByName("Za1_Chn")->AsFloat;
      }
     }

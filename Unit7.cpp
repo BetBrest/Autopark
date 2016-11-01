@@ -354,16 +354,29 @@ void __fastcall TForm7::Edit2KeyPress(TObject *Sender, char &Key)
                 Query2->SQL->Clear();
 
                 // ShowMessage(Form7 ->ComboBox3->Text);
-                Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1MChas, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
+                Query2->SQL->Add("select Za1km , Za1Km_5, Za1Km_10, Za1MChas,Za1MChas_5,Za1MChas_10, Za1chas from Cars where (Govnumber =:p1) AND (Marka=:p2)");
 
                  Query2->ParamByName("p1")->AsString=Form7 ->ComboBox6->Text;
                  Query2->ParamByName("p2")->AsString=Form7 ->ComboBox5->Text;
                       Query2->Open();
                 if(CheckBox4->Checked==true)
                 {
+                 if (ComboBox9->Text == "0%")
+                 {
                   Edit4->Text= FloatToStrF(Query2->FieldByName("Za1MChas")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
                   Edit6->Text=FloatToStr(Query2->FieldByName("Za1MChas")->AsFloat );
                  }
+                 if (ComboBox9->Text == "5%")
+                 {
+                  Edit4->Text= FloatToStrF(Query2->FieldByName("Za1MChas_5")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
+                  Edit6->Text=FloatToStr(Query2->FieldByName("Za1MChas_5")->AsFloat );
+                 }
+                 if (ComboBox9->Text == "10%")
+                 {
+                  Edit4->Text= FloatToStrF(Query2->FieldByName("Za1MChas_10")->AsFloat * StrToFloat(Form7->Edit2->Text),ffFixed,10,2);
+                  Edit6->Text=FloatToStr(Query2->FieldByName("Za1MChas_10")->AsFloat );
+                 }
+                }
                  else
               {
 

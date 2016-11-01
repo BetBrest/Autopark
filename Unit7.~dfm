@@ -202,11 +202,11 @@ object Form7: TForm7
     Visible = False
   end
   object Label13: TLabel
-    Left = 113
+    Left = 83
     Top = 338
-    Width = 81
+    Width = 118
     Height = 24
-    Caption = #1053#1072#1082#1088#1091#1090#1082#1072
+    Caption = #1053#1072#1082#1088#1091#1090#1082#1072' '#1082#1084
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
@@ -230,12 +230,26 @@ object Form7: TForm7
     Caption = '"+"'
     OnClick = SpeedButton2Click
   end
+  object Label16: TLabel
+    Left = 83
+    Top = 370
+    Width = 118
+    Height = 24
+    Caption = #1053#1072#1082#1088#1091#1090#1082#1072' '#1084'/'#1095
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
   object MonthCalendar1: TMonthCalendar
     Left = 553
     Top = 17
     Width = 256
     Height = 275
-    Date = 40314.6410355093
+    Date = 40314.9803193403
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
@@ -662,6 +676,28 @@ object Form7: TForm7
     ParentFont = False
     TabOrder = 27
     OnClick = CheckBox5Click
+  end
+  object ComboBox9: TComboBox
+    Left = 210
+    Top = 367
+    Width = 218
+    Height = 32
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ItemHeight = 24
+    ItemIndex = 0
+    ParentFont = False
+    TabOrder = 28
+    Text = '0%'
+    Visible = False
+    OnKeyPress = ComboBox9KeyPress
+    Items.Strings = (
+      '0%'
+      '5%'
+      '10%')
   end
   object Query1: TQuery
     DatabaseName = 'autopark2'
